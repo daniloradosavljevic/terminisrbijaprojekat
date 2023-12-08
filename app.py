@@ -116,7 +116,7 @@ def success_page():
 
 @app.route('/dodavanje_sale',methods=['GET','POST'])
 def dodavanjesale():
-    if 'loggedin' not in session or not session['loggedin']:
+    if 'loggedin' not in session or not session['loggedin'] or session['tip'] == 2 :
         return redirect(url_for('home'))
     msg = ''
     if request.method == "POST":
