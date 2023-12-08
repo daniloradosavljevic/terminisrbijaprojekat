@@ -53,7 +53,6 @@ def login():
             session['tip'] = account['tip']
             msg = 'Logged in successfully!'
             return redirect(url_for('home'))
-            #return render_template('index.html',msg=msg)
         else:
             msg = 'Incorrect username/password'
     return render_template('login.html',msg=msg)
@@ -98,7 +97,6 @@ def register():
             verification_link = url_for('verify_email', token=verification_token, _external=True)
             mejlporuka = Message('Dobrodošlica na TerminiSrbija!', sender = 'terminisrbija@yandex.com', recipients = [str(email)])
             mejlporuka.body = 'Zdravo ' + ime + ', ' +  f'Dobrodošao na TerminiSrbija! Verifikuj svoju email adresu: {verification_link}'
-            #mejlporuka.body = 'Zdravo ' + str(ime) + ' ! Dobrodošao na TerminiSrbija!'
             mail.send(mejlporuka)
             reg = True
     elif request.method == 'POST':

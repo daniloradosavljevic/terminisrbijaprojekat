@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<!--<script src="{{ url_for('static', filename='js/select_gradova.js') }}"></script>-->
 <script>
     fetch("{{ url_for('static', filename='js/gradovi.json') }}")
       .then(response => response.json())
@@ -27,10 +26,9 @@
         <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox"/></br></br>
         <input id="cena_po_satu" name="cena_po_satu" type="text" placeholder="Unesite cenu po satu" class="textbox"/></br></br></br>
         <input id="opis" name="opis" type="text" placeholder="Unesite kratak opis vasih usluga" class="textbox"/></br></br></br>
-        <!-- <input id="grad" name="grad" type="text" placeholder="Unesite cenu po satu" class="textbox"/></br></br></br>-->
         <select id="citySelect" name="grad"></select><br><br>
         <input id="adresa" name="adresa" type="text" placeholder="Unesite adresu" class="textbox"/></br></br></br>
-        <input id="grad" name="grad" type="hidden"> <!-- Skriveno polje za grad -->
+        <input id="grad" name="grad" type="hidden"> 
         <input type="submit" class="btn" value="Dodaj salu"></br></br>
     </form>
 </h2>
