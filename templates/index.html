@@ -1,28 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %}
 
-{% block body %}
-
-</br></br></br></br></br>
+</br>
+</br>
+</br>
+</br>
+</br>
 <div align="center">
-  <div align="center" class="border">
-     <div class="header">
-        <h1 class="word">Index</h1>
-    {% if ulogovan == True %} 
-    </div></br></br></br>
+    <div align="center" class="border">
+        <div class="header">
+            <h1 class="word">Index</h1>
+            {% if ulogovan == True %}
+        </div>
+        </br>
+        </br>
+        </br>
         <h1 class="bottom">
-             Zdravo {{session.username}}!!</br></br> Dobrodosao                
-        </h1></br></br></br>
+            Zdravo {{session.username}}!!</br>
+            </br> Dobrodosao
+        </h1>
+        </br>
+        </br>
+        </br>
         <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-        <br><br>
-        {% if session['tip'] == 1 %}
-        <a href="{{ url_for('dodavanjesale') }}" class="btn">Dodaj balon salu</a>
-      {% endif %}
-    {% else %}
+        <br><br> {% if session['tip'] == 1 %}
+        <a href="{{ url_for('dodavanjesale') }}" class="btn">Dodaj balon salu</a> {% endif %} {% else %}
         <a href="{{ url_for('login') }}" class="btn">Sign in</a>
-        <a href="{{ url_for('register') }}" class="btn">Register</a>
-    {% endif %}
+        <a href="{{ url_for('register') }}" class="btn">Register</a> {% endif %}
 
-  </div>
+    </div>
 </div>
 
 {% endblock %}

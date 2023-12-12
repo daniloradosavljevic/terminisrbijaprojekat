@@ -1,35 +1,45 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 
-</br></br></br></br></br>
+</br>
+</br>
+</br>
+</br>
+</br>
 <div align="center">
-  <div align="center" class="border">
-     <div class="header">
-        <h1 class="word">Register</h1>
-     </div>
-    <h2 class="word">
-        <form action="{{ url_for('register') }}" method="post">
-          <div class="msg">{{ msg }}</div>
-          {% if reg %}
-          <a class="bottom" href="{{url_for('login')}}"> Log in</a></p>
-          {% else %}
-            <input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
-            <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
-            <input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="textbox"/></br></br>
-            <input id="ime" name="ime" type="text" placeholder="Enter Your First Name" class="textbox"/></br></br>
-            <input id="prezime" name="prezime" type="text" placeholder="Enter Your Last Name" class="textbox"/></br></br>
-            <input id="telefon" name="telefon" type="text" placeholder="Enter Your Phone Number" class="textbox"/></br></br>
-            <select id="tip" name="tip" class="textbox">
+    <div align="center" class="border">
+        <div class="header">
+            <h1 class="word">Register</h1>
+        </div>
+        <h2 class="word">
+            <form action="{{ url_for('register') }}" method="post">
+                <div class="msg">{{ msg }}</div>
+                {% if reg %}
+                <a class="bottom" href="{{url_for('login')}}"> Log in</a></p>
+                {% else %}
+                <input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox" /></br>
+                </br>
+                <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox" /></br>
+                </br>
+                <input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="textbox" /></br>
+                </br>
+                <input id="ime" name="ime" type="text" placeholder="Enter Your First Name" class="textbox" /></br>
+                </br>
+                <input id="prezime" name="prezime" type="text" placeholder="Enter Your Last Name" class="textbox" /></br>
+                </br>
+                <input id="telefon" name="telefon" type="text" placeholder="Enter Your Phone Number" class="textbox" /></br>
+                </br>
+                <select id="tip" name="tip" class="textbox">
               <option value="" disabled selected hidden>- Prijava kao -</option>
               <option value="1" placeholder="Vlasnik balon sale">Vlasnik balon sale</option>
               <option value="2" placeholder="Igrac">Igrac</option>
-            </select></br></br>
-            <input type="submit" class="btn" value="Sign Up"></br>
-            {% endif %}
-        </form>
-    </h2>
-    <p class="bottom">Already have an account?  <a class="bottom" href="{{url_for('login')}}"> Sign In here</a></p>
-  </div>
+            </select></br>
+                </br>
+                <input type="submit" class="btn" value="Sign Up"></br>
+                {% endif %}
+            </form>
+        </h2>
+        <p class="bottom">Already have an account? <a class="bottom" href="{{url_for('login')}}"> Sign In here</a></p>
+    </div>
 </div>
 
 {% endblock %}

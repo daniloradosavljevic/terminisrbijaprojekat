@@ -1,35 +1,42 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 
 <script>
     fetch("{{ url_for('static', filename='js/gradovi.json') }}")
-      .then(response => response.json())
-      .then(data => {
-        const citySelect = document.getElementById('citySelect');
-        data.forEach(city => {
-          const option = document.createElement('option');
-          option.value = city.city;
-          option.textContent = city.city;
-          citySelect.appendChild(option);
+        .then(response => response.json())
+        .then(data => {
+            const citySelect = document.getElementById('citySelect');
+            data.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.city;
+                option.textContent = city.city;
+                citySelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.log('Došlo je do greške pri učitavanju fajla:', error);
         });
-      })
-      .catch(error => {
-        console.log('Došlo je do greške pri učitavanju fajla:', error);
-      });
-  </script>
-  
+</script>
+
 
 
 <h2 class="word">
     <form action="{{ url_for('dodavanjesale') }}" method="post">
-      <div class="msg">{{ msg }}</div>
-        <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox"/></br></br>
-        <input id="cena_po_satu" name="cena_po_satu" type="text" placeholder="Unesite cenu po satu" class="textbox"/></br></br></br>
-        <input id="opis" name="opis" type="text" placeholder="Unesite kratak opis vasih usluga" class="textbox"/></br></br></br>
+        <div class="msg">{{ msg }}</div>
+        <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox" /></br>
+        </br>
+        <input id="cena_po_satu" name="cena_po_satu" type="text" placeholder="Unesite cenu po satu" class="textbox" /></br>
+        </br>
+        </br>
+        <input id="opis" name="opis" type="text" placeholder="Unesite kratak opis vasih usluga" class="textbox" /></br>
+        </br>
+        </br>
         <select id="citySelect" name="grad"></select><br><br>
-        <input id="adresa" name="adresa" type="text" placeholder="Unesite adresu" class="textbox"/></br></br></br>
-        <input id="grad" name="grad" type="hidden"> 
-        <input type="submit" class="btn" value="Dodaj salu"></br></br>
+        <input id="adresa" name="adresa" type="text" placeholder="Unesite adresu" class="textbox" /></br>
+        </br>
+        </br>
+        <input id="grad" name="grad" type="hidden">
+        <input type="submit" class="btn" value="Dodaj salu"></br>
+        </br>
     </form>
 </h2>
 <p class="bottom"><a class="bottom" href="{{url_for('home')}}">Vrati se nazad</a></p>
