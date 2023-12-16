@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins%3Awght%40400%3B500&display=swap%27%29%3B");
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Login */
+
+.box-area{
+    width: 930px;
+    border-radius: 30px;
+}
+
+/* Right Box */
+
+.right-box{
+    padding: 40px 30px 40px 40px;
+}
+
+/* Left Box */
+
+.left-box {
+    border-radius: 30px;
+}
+
+/* Placeholder */
+
+::placeholder{
+    font-size: 16px;
+}
+
+/* Responce */
+
+@media only screen and (max-width: 768px){
+    .box-area{
+        margin: 0 10px;
+    }
+    .left-box{
+        height: 100px;
+        overflow: hidden;
+    }
+    .right-box{
+        padding: 20px;
+    }
+}
+
+/*  Background  */
+.bg-image {
+    background-image: url('images/pozadina.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Viewport height */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
