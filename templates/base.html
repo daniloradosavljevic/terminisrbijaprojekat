@@ -4,6 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS bundle with Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <title>Termini Srbija</title>
     
 </head>
@@ -13,7 +19,7 @@
    <nav class="navbar navbar-expand-md navbar-light">
     <div class="container-xxl">
         <a href="pocetna.html" class="navbar-brand">
-          <img src="images/logo.png" alt="" width="130" height="50">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="130" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,25 +27,25 @@
         <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav">
             <ul class="navbar-nav">
                 <li class="nav-item ">
-                    <a href="pocetna.html" class="nav-link text-success">Pocetna</a>
+                    <a href="{{ url_for('home') }}" class="nav-link text-success">Pocetna</a>
                 </li>
                 <li class="nav-item">
-                    <a href="sale.html" class="nav-link text-success">Balon Sale</a>
+                    <a href="#" class="nav-link text-success">Balon Sale</a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link text-success">Aktivne Ponude</a>
+                    <a href="#" class="nav-link text-success">Aktivne Ponude</a>
                 </li>
                 <li class="nav-item">
-                  <a href="dashboard.html" class="nav-link text-success">Dashboard</a>
+                  <a href="#" class="nav-link text-success">Dashboard</a>
               </li>
                 <li class="nav-item d-md-none">
-                    <a href="" class="nav-link text-success">LogIn</a>
+                    <a class="nav-link text-success">LogIn</a>
                 </li>
                 <li class="nav-item ms-2 d-none d-md-inline">
-                    <a class="btn btn-success">Login</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-success">Login</a>
                 </li>
                 <li class="nav-item">
-                  <a href="" class="nav-link"><i class="fa-solid fa-circle-user fa-2xl" style="color: #198754;"></i></a>
+                  <a href="#" class="nav-link"><i class="fa-solid fa-circle-user fa-2xl" style="color: #198754;"></i></a>
                 </li>
             </ul>
         </div>
@@ -61,7 +67,6 @@
       <li class="ms-3"><a href="https://www.tiktok.com/en/"><i class="fa-brands fa-tiktok fa-xl px-2" style="color: #198754;"></i></a><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
       <li class="ms-3"><a href="https://twitter.com/home?lang=hr"><i class="fa-brands fa-twitter fa-xl px-2" style="color: #198754;"></i></a><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
     </ul>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
