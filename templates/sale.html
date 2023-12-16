@@ -44,7 +44,7 @@
                 </div>
               </div>
               <div>
-                <a href="dodaj_oglas.html" class="display-5 pb-5 px-5 text-success d-none d-xl-block"><i class="fa-sharp fa-thin fa-plus fa-xl"></i></a>
+                <a href="{{ url_for('dodavanjesale') }}" class="display-5 pb-5 px-5 text-success d-none d-xl-block"><i class="fa-sharp fa-thin fa-plus fa-xl"></i></a>
               </div>
          </div>
           </div>
@@ -52,66 +52,27 @@
         <!-- Lista -->
         <div class="container">
           <div class="row row-cols-1 row-cols-md-2 g-4">
-            <!-- Objava -->
+            {% for sala in sve_sale %}
+
             <div class="col">
-              <div class="card">
-                <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h3 class="card-title text-center text-success">Ime sale</h3>
-                  <i class="fa-solid fa-heart fa-xl " style="color: #198754;"> <p class="px-5">100</p></i><br>
-                  <i class="fa-solid fa-location-dot fa-xl " style="color: #198754;"> <p class="px-5">Kragujevac</p></i><br>
-                  <div class="text-center py-2">
-                    <a href="" class="btn btn-success text-center">Pogledaj jos</a>
-                  </div>
+                <div class="card">
+                  <img src="{{ sala['putanja_slike'] }}" class="card-img-top" alt="...">
+                  
+                  <div class="card-body">
+                        <h3 class="card-title text-center text-success">{{ sala['naziv_sale'] }}</h3>
+                        <i class="fa-solid fa-heart fa-xl " style="color: #198754;">
+                            <p class="px-5">100</p>
+                        </i><br>
+                        <i class="fa-solid fa-location-dot fa-xl " style="color: #198754;">
+                            <p class="px-5">{{ sala['grad'] }}</p>
+                        </i><br>
+                        <div class="text-center py-2">
+                            <a href="" class="btn btn-success text-center">Pogledaj jos</a>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <!-- Kraj objave -->
-            <!-- Objava -->
-            <div class="col">
-              <div class="card">
-                <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h3 class="card-title text-center text-success">Ime sale</h3>
-                  <i class="fa-solid fa-heart fa-xl " style="color: #198754;"> <p class="px-5">100</p></i><br>
-                  <i class="fa-solid fa-location-dot fa-xl py-1" style="color: #198754;"> <p class="px-5">Kragujevac</p></i><br>
-                  <div class="text-center py-2">
-                    <a href="" class="btn btn-success text-center">Pogledaj jos</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Kraj objave -->
-            <!-- Objava -->
-            <div class="col">
-              <div class="card">
-                <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h3 class="card-title text-center text-success">Ime sale</h3>
-                  <i class="fa-solid fa-heart fa-xl " style="color: #198754;"> <p class="px-5">100</p></i><br>
-                  <i class="fa-solid fa-location-dot fa-xl py-1" style="color: #198754;"> <p class="px-5">Kragujevac</p></i><br>
-                  <div class="text-center py-2">
-                    <a href="" class="btn btn-success text-center">Pogledaj jos</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Kraj objave -->
-            <!-- Objava -->
-            <div class="col">
-              <div class="card">
-                <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h3 class="card-title text-center text-success">Ime sale</h3>
-                  <i class="fa-solid fa-heart fa-xl " style="color: #198754;"> <p class="px-5">100</p></i><br>
-                  <i class="fa-solid fa-location-dot fa-xl py-1" style="color: #198754;"> <p class="px-5">Kragujevac</p></i><br>
-                  <div class="text-center py-2">
-                    <a href="" class="btn btn-success text-center">Pogledaj jos</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Kraj objave -->
+            {% endfor %}
 
           </div>
           </div>
