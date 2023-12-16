@@ -33,25 +33,25 @@
                     <form action="{{ url_for('register') }}" method="post">
                         <div class="msg">{{ msg }}</div>
                         {% if reg %}
-                        <a class="bottom" href="{{url_for('login')}}"> Log in</a></p>
+                        <a class="bottom" href="{{url_for('login')}}">Uloguj se</a></p>
                         {% else %}
                         <div class="input-group mb-3">
-                            <input id="username" name="username" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Enter Your Username">
+                            <input id="username" name="username" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Unesite korisničko ime">
                         </div>
                         <div class="input-group mb-3">
-                            <input id="password" name="password" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Enter Your Password">
+                            <input id="password" name="password" type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Unesite šifru">
                         </div>
                         <div class="input-group mb-3">
-                            <input id="email" name="email" type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Enter Your Email ID">
+                            <input id="email" name="email" type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Unesite email adresu">
                         </div>
                         <div class="input-group mb-3">
-                            <input id="ime" name="ime" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Enter Your First Name">
+                            <input id="ime" name="ime" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Unesite ime">
                         </div>
                         <div class="input-group mb-3">
-                            <input id="prezime" name="prezime" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Enter Your Last Name">
+                            <input id="prezime" name="prezime" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Unesite prezime">
                         </div>
                         <div class="input-group mb-3">
-                            <input id="telefon" name="telefon" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Enter Your Phone Number">
+                            <input id="telefon" name="telefon" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Unesite broj telefona">
                         </div>
                         <div class="input-group mb-3">
                             <select id="tip" name="tip" class="textbox custom-select form-control form-control-lg bg-light fs-6">
@@ -61,12 +61,12 @@
                             </select>
                         </div>
                         <div class="input-group mb-3">
-                            <button class="btn btn-lg btn-primary w-100 fs-6">Sign Up</button>
+                            <button class="btn btn-lg btn-primary w-100 fs-6">Prijavi se</button>
                         </div>
                         {% endif %}
                     </form>
                         <div class="row">
-                            <small>Already have an account? <a href="{{url_for('login')}}">Sign In here</a> </small>
+                            <small>Već imate nalog? <a href="{{url_for('login')}}">Uloguj se ovde</a> </small>
                         </div>
                     </div>
                 </div>
