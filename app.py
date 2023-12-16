@@ -164,6 +164,12 @@ def allowed_file(filename):
 def file_size_allowed(file):
     return file.content_length <= app.config['MAX_CONTENT_LENGTH']
 
+@app.route('/sale',methods=['GET','POST'])
+def sale():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike FROM balon_sale LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale GROUP BY balon_sale.id_sale')
+    sve_sale = cursor.fetchall()
+    return render_template('sale.html',sve_sale=sve_sale) 
 
 if __name__ == '__main__':
     app.run(debug=True)
