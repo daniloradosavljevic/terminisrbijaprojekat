@@ -10,7 +10,7 @@
         .header{
             height: 700px;
             width: 100%;
-            background-image: url(images/slika1.jpg);
+            background-image: url("{{ url_for('static', filename='images/slika1.jpg') }}");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -35,7 +35,7 @@
    <nav class="navbar navbar-expand-md navbar-light">
     <div class="container-xxl">
         <a href="pocetna.html" class="navbar-brand">
-          <img src="images/logo.png" alt="" width="130" height="50">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="130" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
