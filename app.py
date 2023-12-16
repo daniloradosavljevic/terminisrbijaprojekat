@@ -149,8 +149,11 @@ def dodavanjesale():
                         file_extension = fajl.filename.rsplit('.', 1)[1].lower()
                         unique_filename = str(uuid.uuid4()) + '.' + file_extension
                         file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(unique_filename))
-                        id_ubacene_sale = cursor.execute('SELECT MAX(id_sale) FROM balon_sale') or 0
+                        cursor.execute('SELECT MAX(id_sale) FROM balon_sale')
+                        id_ubacene_sale = cursor.fetchone()['MAX(id_sale)'] or 0
                         fajl.save(file_path)
+                        cursor.execute('INSERT INTO slike_sala (id_sale, putanja) VALUES (%s, %s)', (id_ubacene_sale, file_path))
+                        mysql.connection.commit()
 
     return render_template('dodavanje_sale.html',msg=msg)
 
