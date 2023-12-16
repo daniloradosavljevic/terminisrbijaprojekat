@@ -46,7 +46,7 @@ body{
 
 /*  Background  */
 .bg-image {
-    background-image: url('images/pozadina.jpg');
+    background-image: url('../images/pozadina.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh; /* Viewport height */
