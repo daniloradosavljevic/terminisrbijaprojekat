@@ -164,6 +164,10 @@ def allowed_file(filename):
 def file_size_allowed(file):
     return file.content_length <= app.config['MAX_CONTENT_LENGTH']
 
+@app.route('/sale',methods=['GET','POST'])
+def sale():
+    return render_template('sale.html')        
+
 
 if __name__ == '__main__':
     app.run(debug=True)
