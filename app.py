@@ -168,7 +168,6 @@ def file_size_allowed(file):
 def sale():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike FROM balon_sale LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale GROUP BY balon_sale.id_sale')
-    #neki komentar bezveze
     sve_sale = cursor.fetchall()
     return render_template('sale.html',sve_sale=sve_sale) 
 
