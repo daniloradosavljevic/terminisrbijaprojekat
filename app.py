@@ -4,6 +4,8 @@ import MySQLdb.cursors
 import re
 from flask_mail import Mail, Message
 import secrets
+import uuid,os
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
@@ -19,10 +21,13 @@ app.config['MAIL_PORT'] = 587  # Yandex obično koristi port 587 za TLS
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
+app.config['UPLOAD_FOLDER'] = 'static/slike_sala'
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
+
+
 
 mail = Mail(app)
-
-
 mysql = MySQL(app)
 
 @app.route('/')
@@ -126,7 +131,8 @@ def dodavanjesale():
         opis = request.form.get('opis')
         grad = request.form.get('grad')
         adresa = request.form.get('adresa')
-        print(naziv_sale, cena_po_satu, opis, grad, adresa)
+        
+        #print(naziv_sale, cena_po_satu, opis, grad, adresa)
         
         if not all([naziv_sale, cena_po_satu, opis, grad, adresa]):
             msg = 'Molimo vas da popunite sva polja!'
@@ -135,7 +141,26 @@ def dodavanjesale():
             cursor.execute('INSERT INTO balon_sale VALUES (NULL, %s, %s, %s, %s, %s, %s)', (id_vlasnika, naziv_sale, cena_po_satu, opis, grad, adresa))
             mysql.connection.commit()
             msg = 'Uspešno ste dodali salu!'
+
+            fajlovi = request.files.getlist('file')  # Ispravljeno pozivanje metode getlist()
+            if fajlovi:
+                for index, fajl in enumerate(fajlovi):
+                    if fajl and allowed_file(fajl.filename) and file_size_allowed(fajl):
+                        file_extension = fajl.filename.rsplit('.', 1)[1].lower()
+                        unique_filename = str(uuid.uuid4()) + '.' + file_extension
+                        file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(unique_filename))
+                        id_ubacene_sale = cursor.execute('SELECT MAX(id_sale) FROM balon_sale') or 0
+                        fajl.save(file_path)
+
     return render_template('dodavanje_sale.html',msg=msg)
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def file_size_allowed(file):
+    return file.content_length <= app.config['MAX_CONTENT_LENGTH']
+
 
 if __name__ == '__main__':
     app.run(debug=True)

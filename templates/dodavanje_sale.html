@@ -20,7 +20,8 @@
 
 
 <h2 class="word">
-    <form action="{{ url_for('dodavanjesale') }}" method="post">
+    <form action="{{ url_for('dodavanjesale') }}" method="post"
+    enctype = "multipart/form-data">
         <div class="msg">{{ msg }}</div>
         <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox" /></br>
         </br>
@@ -35,6 +36,7 @@
         </br>
         </br>
         <input id="grad" name="grad" type="hidden">
+        <input type = "file" name = "file" multiple/>
         <input type="submit" class="btn" value="Dodaj salu"></br>
         </br>
     </form>
