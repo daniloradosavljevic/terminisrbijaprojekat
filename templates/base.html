@@ -42,7 +42,7 @@
    <!-- Navbar -->
    <nav class="navbar navbar-expand-md navbar-light">
     <div class="container-xxl">
-        <a href="pocetna.html" class="navbar-brand">
+        <a href="{{ url_for('home') }}" class="navbar-brand">
           <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="130" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +62,14 @@
                 <li class="nav-item d-md-none">
                     <a class="nav-link text-success">LogIn</a>
                 </li>
+                {% if 'loggedin' in session and session['loggedin'] %}
+                <!-- Korisnik je ulogovan, ne prikazujemo dugme za login -->
+            {% else %}
+                <!-- Korisnik nije ulogovan, prikazujemo dugme za login -->
                 <li class="nav-item ms-2 d-none d-md-inline">
                     <a href="{{ url_for('login') }}" class="btn btn-success">Login</a>
                 </li>
+            {% endif %}
                 <li class="nav-item">
                   <a href="#" class="nav-link"><i class="fa-solid fa-circle-user fa-2xl" style="color: #198754;"></i></a>
                 </li>
