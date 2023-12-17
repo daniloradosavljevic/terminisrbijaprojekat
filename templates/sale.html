@@ -54,25 +54,25 @@
           <div class="row row-cols-1 row-cols-md-2 g-4">
             {% for sala in sve_sale %}
 
-            <div class="col">
-                <div class="card">
-                  <img src="{{ sala['putanja_slike'] }}" class="card-img-top" alt="...">
-                  
-                  <div class="card-body">
-                        <h3 class="card-title text-center text-success">{{ sala['naziv_sale'] }}</h3>
-                        <i class="fa-solid fa-heart fa-xl " style="color: #198754;">
-                            <p class="px-5">100</p>
-                        </i><br>
-                        <i class="fa-solid fa-location-dot fa-xl " style="color: #198754;">
-                            <p class="px-5">{{ sala['grad'] }}</p>
-                        </i><br>
-                        <div class="text-center py-2">
-                            <a href="" class="btn btn-success text-center">Pogledaj jos</a>
-                        </div>
-                    </div>
-                </div>
+<div class="col">
+    <div class="card">
+      <img src="{{ sala['putanja_slike'] }}" class="card-img-top" alt="...">
+      
+      <div class="card-body">
+            <h3 class="card-title text-center text-success">{{ sala['naziv_sale'] }}</h3>
+            <i class="fa-solid fa-heart fa-xl " style="color: #198754;">
+                <p class="px-5">100</p>
+            </i><br>
+            <i class="fa-solid fa-location-dot fa-xl " style="color: #198754;">
+                <p class="px-5">{{ sala['grad'] }}</p>
+            </i><br>
+            <div class="text-center py-2">
+                <a href="{{ url_for('prikazivanje_sale', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Pogledaj jos</a>
             </div>
-            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
 
           </div>
           </div>
