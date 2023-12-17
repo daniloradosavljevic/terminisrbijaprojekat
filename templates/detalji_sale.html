@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>{{ sala['naziv_sale'] }}</h1>
+<p>Opis: {{ sala['opis'] }}</p>
+<p>Cena po satu: {{ sala['cena_po_satu'] }}</p>
+
+{% if slike %}
+    <h2>Slike sale:</h2>
+    <div class="slike-sale">
+        {% for slika in slike %}
+<img src="{{ slika['putanja'].replace('\\', '/') }}" class="card-img-top" alt="Slika sale">
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

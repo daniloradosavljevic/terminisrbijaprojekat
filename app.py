@@ -171,6 +171,18 @@ def sale():
     sve_sale = cursor.fetchall()
     return render_template('sale.html',sve_sale=sve_sale) 
 
+@app.route('/sale/<int:sala_id>',methods=['GET','POST'])
+def prikazivanje_sale(sala_id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM balon_sale WHERE id_sale = %s', (sala_id,))
+    sala = cursor.fetchone()
+    if sala:
+        cursor.execute('SELECT putanja FROM slike_sala WHERE id_sale = %s', (sala_id,))
+        slike = cursor.fetchall()
+        return render_template('detalji_sale.html', sala=sala, slike=slike)
+    else:
+        return 'Sala nije pronađena', 404  
+
 if __name__ == '__main__':
     app.run(debug=True)
 
