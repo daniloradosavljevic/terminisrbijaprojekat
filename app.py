@@ -180,6 +180,7 @@ def prikazivanje_sale(sala_id):
         cursor.execute('SELECT putanja FROM slike_sala WHERE id_sale = %s', (sala_id,))
         slike = cursor.fetchall()
         return render_template('detalji_sale.html', sala=sala, slike=slike)
+    #komentar
     else:
         return 'Sala nije pronađena', 404  
 
