@@ -6,6 +6,7 @@ from flask_mail import Mail, Message
 import secrets
 import uuid,os
 from werkzeug.utils import secure_filename
+from mapa import generate_embed_code_from_address
 
 
 app = Flask(__name__)
@@ -170,6 +171,20 @@ def sale():
     cursor.execute('SELECT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike FROM balon_sale LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale GROUP BY balon_sale.id_sale')
     sve_sale = cursor.fetchall()
     return render_template('sale.html',sve_sale=sve_sale) 
+
+@app.route('/sale/<int:sala_id>', methods=['GET', 'POST'])
+def prikazivanje_sale(sala_id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM balon_sale WHERE id_sale = %s', (sala_id,))
+    sala = cursor.fetchone()
+    if sala:
+        cursor.execute('SELECT putanja FROM slike_sala WHERE id_sale = %s', (sala_id,))
+        slike = cursor.fetchall()
+        kod_mape = generate_embed_code_from_address(sala['adresa'])
+        return render_template('detalji_sale.html', sala=sala, slike=slike,kod_mape=kod_mape)
+    else:
+        return 'Sala nije pronađena', 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
