@@ -17,7 +17,7 @@
                 <p class="px-5">{{ sala['grad'] }}</p>
             </i><br>
             <div class="text-center py-2">
-                <a href="" class="btn btn-success text-center">Pogledaj jos</a>
+                <a href="{{ url_for('prikazivanje_sale', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Pogledaj jos</a>
             </div>
         </div>
     </div>

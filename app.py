@@ -180,7 +180,7 @@ def prikazivanje_sale(sala_id):
     if sala:
         cursor.execute('SELECT putanja FROM slike_sala WHERE id_sale = %s', (sala_id,))
         slike = cursor.fetchall()
-        kod_mape = generate_embed_code_from_address(sala['adresa'])
+        kod_mape = generate_embed_code_from_address(sala['adresa'] + ',' + sala['grad'])
         return render_template('detalji_sale.html', sala=sala, slike=slike,kod_mape=kod_mape)
     else:
         return 'Sala nije pronađena', 404
