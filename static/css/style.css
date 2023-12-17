@@ -55,3 +55,19 @@ body{
     align-items: center;
     justify-content: center;
 }
+
+/* Dodavanje sale css */
+
+.dodavanje_s1{
+    height: 70px;
+
+}
+
+.dodavanje_s2{
+    height: 150px;
+}
+
+.dodavanje_s3{
+    margin: auto;
+    padding: 2px;
+}

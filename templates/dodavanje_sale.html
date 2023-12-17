@@ -19,29 +19,27 @@
 
 
 
-<h2 class="word">
+<h2 class="word dodavanje_s3 border container d-flex justify-content-center align-items-center min-vh-100 ">
     <form action="{{ url_for('dodavanjesale') }}" method="post"
     enctype = "multipart/form-data">
         <div class="msg">{{ msg }}</div>
-        <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox" /></br>
-        </br>
-        <input id="cena_po_satu" name="cena_po_satu" type="text" placeholder="Unesite cenu po satu" class="textbox" /></br>
-        </br>
-        </br>
-        <input id="opis" name="opis" type="text" placeholder="Unesite kratak opis vasih usluga" class="textbox" /></br>
-        </br>
-        </br>
-        <select id="citySelect" name="grad"></select><br><br>
-        <input id="adresa" name="adresa" type="text" placeholder="Unesite adresu" class="textbox" /></br>
-        </br>
-        </br>
+        <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox dodavanje_s1 form-control form-control-lg bg-light fs-6" />
+        <br>
+        <input id="cena_po_satu" name="cena_po_satu" type="text" placeholder="Unesite cenu po satu" class="textbox dodavanje_s1 form-control form-control-lg bg-light fs-6" />
+        <br>
+        <input id="opis" name="opis" type="text" placeholder="Unesite kratak opis vasih usluga" class="textbox dodavanje_s2 form-control form-control-lg bg-light fs-6" />
+        <br>
+        <select id="citySelect" name="grad" class="custom-select dodavanje_s1 form-control form-control-lg bg-light fs-6"></select>
+        <br>
+        <input id="adresa" name="adresa" type="text" placeholder="Unesite adresu" class="textbox dodavanje_s1 form-control form-control-lg bg-light fs-6" />
         <input id="grad" name="grad" type="hidden">
-        <input type = "file" name = "file" multiple/>
-        <input type="submit" class="btn" value="Dodaj salu"></br>
-        </br>
+        <br>
+        <input type = "file" name = "file" class="form-control form-control-lg" multiple/>
+        <br>
+        <input type="submit" class="btn btn-lg btn-primary w-100 fs-6" value="Dodaj salu">
     </form>
 </h2>
-<p class="bottom"><a class="bottom" href="{{url_for('home')}}">Vrati se nazad</a></p>
+<p class="bottom"><a class="bottom btn-lg btn-secondary w-100 fs-6" href="{{url_for('home')}}">Vrati se nazad</a></p>
 </div>
 
 {% endblock %}
