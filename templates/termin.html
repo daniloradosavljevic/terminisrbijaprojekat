@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h1>Zatražite termin u sali {{ sala['naziv_sale'] }}</h1>
+<h1>Cena termina iznosi {{ sala['cena_po_satu'] }}  RSD</h1>
+
+<form action="" method="post">
+<p>Odaberite datum i vreme</p>
+<input type="datetime-local">
+<input type="submit" class="btn" value="Zatraži termin"></br>
+</form>
+
+{% endblock %}

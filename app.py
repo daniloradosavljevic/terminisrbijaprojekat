@@ -184,5 +184,13 @@ def prikazivanje_sale(sala_id):
     else:
         return 'Sala nije pronađena', 404  
 
+@app.route('/zatrazi_termin/<int:sala_id>',methods=['GET', 'POST'])
+def zatrazi_termin(sala_id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM balon_sale WHERE id_sale = %s', (sala_id,))
+    sala = cursor.fetchone()
+    return render_template('termin.html',sala=sala)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
