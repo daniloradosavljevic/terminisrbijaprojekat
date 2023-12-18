@@ -6,7 +6,7 @@ from flask_mail import Mail, Message
 import secrets
 import uuid,os
 from werkzeug.utils import secure_filename
-
+from mapa import generate_embed_code_from_address
 
 app = Flask(__name__)
 
