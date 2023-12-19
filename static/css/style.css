@@ -83,7 +83,7 @@ body{
 }
 
 .dodavanje_s2{
-    height: 150px;
+    height: 200px;
 }
 
 .dodavanje_s3{
@@ -95,10 +95,11 @@ body{
     background-image: url('../images/dodavanje_sale_background.png');
     background-size: cover;
     background-position: center;
-    height: 100vh;
     margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+
 
