@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 16, 2023 at 12:32 PM
+-- Generation Time: Jan 03, 2024 at 12:12 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.13
 
@@ -71,17 +71,17 @@ CREATE TABLE IF NOT EXISTS `balon_sale` (
   `adresa` varchar(50) NOT NULL DEFAULT 'BB',
   PRIMARY KEY (`id_sale`),
   KEY `id_vlasnika` (`id_vlasnika`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `balon_sale`
 --
 
 INSERT INTO `balon_sale` (`id_sale`, `id_vlasnika`, `naziv_sale`, `cena_po_satu`, `opis`, `grad`, `adresa`) VALUES
-(19, 2, 'das;kjsad', 0.00, 'dsai;jdasi;das', 'Beograd', ';dasjjdsiaads'),
-(20, 2, 'sad;dsja;', 0.00, 'ds;aijads;ijads', 'Beograd', 'j;ajdsias'),
-(21, 2, 'as;kddk;asj', 0.00, 'dsai;jdasj;ij', 'Beograd', ';idjsaid;jasdsi;adsac'),
-(22, 2, 'asd;j;sdaj', 0.00, 'dasij;adsjid;sa', 'Jagnjilo', 'adopjfs;aj;fa');
+(23, 2, 'Rapid Bozovic', 3600.00, 'Mala balon sala locirana u srcu Sumarica', 'Kragujevac', 'Lovacka 39, Kragujevac'),
+(24, 2, 'Balon Sala \"Radosavljevic', 2600.00, 'dsajldsajasdj', 'Sremčica', 'dsjldajsjdsia'),
+(25, 2, 'balon sala sumadija', 3600.00, 'Blabalbadl', 'Beograd', 'Mirka Jovanovica 33, Kragujevac'),
+(26, 2, 'dsadaij', 0.00, 'daspjasdpipjdasi', 'Beograd', 'Ljutice Bogdana 1A');
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,45 @@ CREATE TABLE IF NOT EXISTS `slike_sala` (
   `id_sale` int NOT NULL,
   `putanja` varchar(100) NOT NULL,
   PRIMARY KEY (`id_slike_sale`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `slike_sala`
+--
+
+INSERT INTO `slike_sala` (`id_slike_sale`, `id_sale`, `putanja`) VALUES
+(4, 23, 'static/slike_sala\\bb9fba16-4b8a-4a99-8a73-acfd7c98d26f.jpg'),
+(5, 23, 'static/slike_sala\\b9ca19dd-0d20-40bf-ac76-03266c716de9.jpg'),
+(6, 24, 'static/slike_sala\\292b3434-04d8-4ce8-9018-e28147f6c579.jpg'),
+(7, 25, 'static/slike_sala\\b1e52b4e-566f-40d2-ab66-7b586174b97c.jpg'),
+(8, 26, 'static/slike_sala\\81506123-4944-4fb0-9f93-da5dda5a4bc9.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `termini`
+--
+
+DROP TABLE IF EXISTS `termini`;
+CREATE TABLE IF NOT EXISTS `termini` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_sale` int NOT NULL,
+  `id_igraca` int NOT NULL,
+  `status_termina` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `vreme` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `termini`
+--
+
+INSERT INTO `termini` (`id`, `id_sale`, `id_igraca`, `status_termina`, `vreme`) VALUES
+(1, 23, 2, 'odbijen', '2024-01-04 11:54:00'),
+(2, 23, 2, 'odbijen', '2024-01-04 11:54:00'),
+(3, 23, 2, 'zatrazen', '2024-01-04 12:02:00'),
+(4, 24, 15, 'potvrdjen', '2024-01-19 12:09:00'),
+(8, 24, 15, 'potvrdjen', '2024-01-03 12:11:00');
 
 --
 -- Constraints for dumped tables
