@@ -7,6 +7,8 @@ import secrets
 import uuid,os
 from werkzeug.utils import secure_filename
 from mapa import generate_embed_code_from_address
+from datetime import datetime
+
 
 
 app = Flask(__name__)
@@ -185,12 +187,29 @@ def prikazivanje_sale(sala_id):
     else:
         return 'Sala nije pronađena', 404
 
-@app.route('/zatrazi_termin/<int:sala_id>',methods=['GET', 'POST'])
+from flask import request
+
+@app.route('/zatrazi_termin/<int:sala_id>', methods=['GET', 'POST'])
 def zatrazi_termin(sala_id):
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'loggedin' not in session or not session['loggedin'] or session['tip'] == 1 :
+        return redirect(url_for('home'))   
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  # Definisanje cursora i ovde
     cursor.execute('SELECT * FROM balon_sale WHERE id_sale = %s', (sala_id,))
     sala = cursor.fetchone()
-    return render_template('termin.html',sala=sala)
+    if request.method == 'POST':
+        vreme = request.form['vreme']
+        cursor.execute('SELECT * FROM termini WHERE id_sale = %s AND vreme = %s AND status_termina = %s', (sala_id, vreme, 'potvrdjen'))
+        existing_termin = cursor.fetchone()
+        if existing_termin:
+            msg = 'Već postoji potvrđen termin za to vreme!'
+            return render_template('termin.html', sala=sala, msg=msg)        
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  # Definisanje cursora ovde
+        cursor.execute('INSERT INTO termini (id_sale, id_igraca, status_termina, vreme) VALUES (%s, %s, %s, %s)',(sala_id, session['id'], 'zatrazen', vreme))
+        mysql.connection.commit()
+        msg = 'Uspešno ste zatražili termin u ovoj sali!'
+        return render_template('termin.html', sala=sala, msg=msg) 
+    return render_template('termin.html', sala=sala)
+
 
 
 if __name__ == '__main__':

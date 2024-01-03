@@ -1,13 +1,42 @@
 {% extends 'base.html' %}
 {% block body %}
+<div class="msg">{{ msg }}</div>
 
 <h1>Zatražite termin u sali {{ sala['naziv_sale'] }}</h1>
-<h1>Cena termina iznosi {{ sala['cena_po_satu'] }}  RSD</h1>
+<h1>Cena termina iznosi {{ sala['cena_po_satu'] }} RSD</h1>
 
 <form action="" method="post">
-<p>Odaberite datum i vreme</p>
-<input type="datetime-local">
-<input type="submit" class="btn" value="Zatraži termin"></br>
+    <p>Odaberite datum i vreme</p>
+    <input type="datetime-local" name="vreme" id="vreme" step="3600" min="{{ current_time }}">
+    <input type="submit" class="btn" value="Zatraži termin"></br>
 </form>
+
+<script>
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+    var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+    var hours = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
+    var minutes = '00'; // Postavljanje minuta na 00
+
+    var current_time = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    document.getElementById('vreme').setAttribute('min', current_time);
+
+    // Dodavanje event listenera za promenu vrednosti
+    document.getElementById('vreme').addEventListener('change', function() {
+        var selected_time = new Date(document.getElementById('vreme').value);
+        var selected_hours = selected_time.getHours() < 10 ? '0' + selected_time.getHours() : selected_time.getHours();
+        var selected_minutes = '00'; // Postavljanje minuta na 00
+
+        // Pravljenje novog formata datuma
+        var formatted_time = selected_time.getFullYear() + '-' +
+                             ('0' + (selected_time.getMonth() + 1)).slice(-2) + '-' +
+                             ('0' + selected_time.getDate()).slice(-2) + 'T' +
+                             selected_hours + ':' +
+                             selected_minutes;
+
+        document.getElementById('vreme').value = formatted_time;
+    });
+</script>
 
 {% endblock %}
