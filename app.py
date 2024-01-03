@@ -210,6 +210,38 @@ def zatrazi_termin(sala_id):
         return render_template('termin.html', sala=sala, msg=msg) 
     return render_template('termin.html', sala=sala)
 
+@app.route('/moji_termini')
+def moji_termini():
+    if 'loggedin' not in session or not session['loggedin'] or session['tip']==1:
+        return redirect(url_for('home'))
+
+    id_igraca = session['id']
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM termini INNER JOIN balon_sale ON termini.id_sale = balon_sale.id_sale WHERE termini.id_igraca = %s', (id_igraca,))
+    termini = cursor.fetchall()
+    return render_template('moji_termini.html', termini=termini)
+
+@app.route('/otkazi_termin/<int:termin_id>', methods=['POST'])
+def otkazi_termin(termin_id):
+    if 'loggedin' not in session or not session['loggedin']:
+        return redirect(url_for('home'))
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT termini.*, balon_sale.naziv_sale FROM termini LEFT JOIN balon_sale ON termini.id_sale = balon_sale.id_sale WHERE termini.id = %s', (termin_id,))
+    termin = cursor.fetchone()
+
+    if not termin:
+        return redirect(url_for('moji_termini', msg='Nemate dozvolu za brisanje tog termina'))
+
+    if termin['status_termina'] == 'zatrazen' and termin['id_igraca'] == session['id']:
+        cursor.execute('DELETE FROM termini WHERE id = %s', (termin_id,))
+        mysql.connection.commit()
+        return redirect(url_for('moji_termini', msg='Uspešno ste otkazali zahtev za termin'))
+
+    return redirect(url_for('moji_termini', msg='Nemate dozvolu za brisanje tog termina'))
+
+
+
 
 
 if __name__ == '__main__':
