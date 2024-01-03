@@ -223,7 +223,7 @@ def moji_termini():
 
 @app.route('/otkazi_termin/<int:termin_id>', methods=['POST'])
 def otkazi_termin(termin_id):
-    if 'loggedin' not in session or not session['loggedin']:
+    if 'loggedin' not in session or not session['loggedin'] or session['tip']==1:
         return redirect(url_for('home'))
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -240,6 +240,41 @@ def otkazi_termin(termin_id):
 
     return redirect(url_for('moji_termini', msg='Nemate dozvolu za brisanje tog termina'))
 
+@app.route('/moji_zahtevi', methods=['GET'])
+def moji_zahtevi():
+    if 'loggedin' not in session or not session['loggedin'] or session['tip'] == 2:
+        return redirect(url_for('home'))
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('''
+        SELECT termini.*, balon_sale.naziv_sale, accounts.username 
+        FROM termini 
+        LEFT JOIN balon_sale ON termini.id_sale = balon_sale.id_sale 
+        LEFT JOIN accounts ON termini.id_igraca = accounts.id 
+        WHERE balon_sale.id_vlasnika = %s
+    ''', (session['id'],))
+    zahtevi_termina = cursor.fetchall()
+    return render_template('moji_zahtevi.html', zahtevi=zahtevi_termina)
+
+@app.route('/odobri_zahtev/<int:termin_id>', methods=['GET'])
+def odobri_zahtev(termin_id):
+    if 'loggedin' not in session or not session['loggedin'] or session['tip'] == 2:
+        return redirect(url_for('home'))
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('UPDATE termini SET status_termina = "odobren" WHERE id = %s', (termin_id,))
+    mysql.connection.commit()
+    return redirect(url_for('moji_zahtevi', sala_id=session['id']))
+
+@app.route('/odbij_zahtev/<int:termin_id>', methods=['GET'])
+def odbij_zahtev(termin_id):
+    if 'loggedin' not in session or not session['loggedin'] or session['tip'] == 2:
+        return redirect(url_for('home'))
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('UPDATE termini SET status_termina = "odbijen" WHERE id = %s', (termin_id,))
+    mysql.connection.commit()
+    return redirect(url_for('moji_zahtevi', sala_id=session['id']))
 
 
 

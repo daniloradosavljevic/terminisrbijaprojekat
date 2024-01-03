@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Zahtevi za terminima u vašim salama</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Igrač</th>
+            <th>Status termina</th>
+            <th>Vreme</th>
+            <th>Sala</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for zahtev in zahtevi %}
+        <tr>
+            <td>{{ zahtev['id'] }}</td>
+            <td>{{ zahtev['username'] }}</td>
+            <td>{{ zahtev['status_termina'] }}</td>
+            <td>{{ zahtev['vreme'] }}</td>
+            <td>{{ zahtev['naziv_sale'] }}</td>
+            <td>
+                {% if zahtev['status_termina'] == 'zatrazen' %}
+                    <a href="{{ url_for('odobri_zahtev', termin_id=zahtev['id']) }}">Odobri</a>
+                    <a href="{{ url_for('odbij_zahtev', termin_id=zahtev['id']) }}">Odbij</a>
+                
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
