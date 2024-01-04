@@ -276,7 +276,81 @@ def odbij_zahtev(termin_id):
     mysql.connection.commit()
     return redirect(url_for('moji_zahtevi', sala_id=session['id']))
 
+@app.route('/profil', methods=['GET'])
+def profil():
+    if 'loggedin' not in session or not session['loggedin']:
+        return redirect(url_for('home'))
 
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
+    korisnik = cursor.fetchone()
+
+    uloga = "Vlasnik sale" if korisnik['tip'] == 1 else "Igrač"
+
+    return render_template('moj_profil.html', korisnik=korisnik, uloga=uloga)
+
+
+@app.route('/izmeni_profil', methods=['GET', 'POST'])
+def izmeni_profil():
+    if 'loggedin' not in session or not session['loggedin']:
+        return redirect(url_for('home'))
+    msg = ''
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST':
+        ime = request.form['ime']
+        prezime = request.form['prezime']
+        telefon = request.form['telefon']
+        email = request.form['email']
+        nova_sifra = request.form['nova_sifra']
+        potvrda_sifre = request.form['potvrda_sifre']
+
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
+        korisnik = cursor.fetchone()
+
+        if korisnik:
+            cursor.execute('SELECT * FROM accounts WHERE email = %s AND id != %s', (email, session['id']))
+            existing_email = cursor.fetchone()
+
+            if existing_email:
+                msg = 'Email adresa je zauzeta!'
+            else:
+                if nova_sifra != potvrda_sifre:
+                    msg = 'Nova šifra i potvrda šifre se ne podudaraju!'
+                else:
+                    if nova_sifra:  # Proveravamo da li je korisnik uneo novu šifru
+                        cursor.execute('UPDATE accounts SET ime = %s, prezime = %s, telefon = %s, email = %s, password = %s WHERE id = %s',
+                                       (ime, prezime, telefon, email, nova_sifra, session['id']))
+                    else:
+                        cursor.execute('UPDATE accounts SET ime = %s, prezime = %s, telefon = %s, email = %s WHERE id = %s',
+                                       (ime, prezime, telefon, email, session['id']))
+                    mysql.connection.commit()
+                    msg = 'Uspešno ste izmenili profil!'
+                    return render_template('izmeni_profil.html', korisnik=korisnik, msg=msg)
+
+    cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
+    korisnik = cursor.fetchone()
+    return render_template('izmeni_profil.html', korisnik=korisnik, msg=msg)
+
+
+@app.route('/deaktiviraj_profil', methods=['GET'])
+def deaktiviraj_profil():
+    if 'loggedin' not in session or not session['loggedin']:
+        return redirect(url_for('home'))
+
+    cursor = mysql.connection.cursor()
+    # Dobavi ID korisnika koji je trenutno prijavljen
+    user_id = session['id']
+    
+    # Obriši korisnika iz tabele
+    cursor.execute('DELETE FROM accounts WHERE id = %s', (user_id,))
+    mysql.connection.commit()
+
+    # Odjavi korisnika
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    
+    # Redirekcija na stranicu oproštaja
+    return render_template('stranica_oprostaja.html')
 
 
 if __name__ == '__main__':

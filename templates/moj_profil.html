@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h1>Zdravo {{ korisnik['ime'] }}</h1>
+    <p>({{ uloga }})</p>
+    {% if uloga == 'Vlasnik sale' %}
+        <a href="{{ url_for('moji_zahtevi') }}">Moji termini</a>
+        <a href="">Moje sale</a>
+    {% elif uloga == 'Igrač' %}
+    <a href="{{ url_for('moji_termini') }}">Moji termini</a>
+
+    {% endif %}
+    <a href="{{ url_for('izmeni_profil') }}">Izmeni profil</a>
+
+    <a href="{{ url_for('deaktiviraj_profil') }}">Deaktiviraj profil</a> 
+{% endblock %}

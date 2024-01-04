@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Izmeni profil</h1>
+{% if msg %}
+<p>{{ msg }}</p>
+{% endif %}
+
+    <form method="POST" action="/izmeni_profil">
+        <label for="ime">Ime:</label>
+        <input type="text" id="ime" name="ime" value="{{ korisnik.ime }}" required><br><br>
+
+        <label for="prezime">Prezime:</label>
+        <input type="text" id="prezime" name="prezime" value="{{ korisnik.prezime }}" required><br><br>
+
+        <label for="telefon">Telefon:</label>
+        <input type="text" id="telefon" name="telefon" value="{{ korisnik.telefon }}" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ korisnik.email }}" required><br><br>
+
+        <label for="nova_sifra">Nova šifra:</label>
+        <input type="password" id="nova_sifra" name="nova_sifra"><br><br>
+
+        <label for="potvrda_sifre">Potvrdi šifru:</label>
+        <input type="password" id="potvrda_sifre" name="potvrda_sifre"><br><br>
+
+        <input type="submit" value="Izmeni profil">
+    </form>
+{% endblock %}
