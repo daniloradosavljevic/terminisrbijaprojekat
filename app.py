@@ -262,8 +262,13 @@ def odobri_zahtev(termin_id):
         return redirect(url_for('home'))
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('UPDATE termini SET status_termina = "odobren" WHERE id = %s', (termin_id,))
-    mysql.connection.commit()
+    cursor.execute('SELECT t.id_sale FROM termini t JOIN balon_sale s ON t.id_sale = s.id_sale WHERE t.id = %s AND s.id_vlasnika = %s', (termin_id, session['id']))
+    sala = cursor.fetchone()
+
+    if sala:
+        cursor.execute('UPDATE termini SET status_termina = "odobren" WHERE id = %s', (termin_id,))
+        mysql.connection.commit()
+    
     return redirect(url_for('moji_zahtevi', sala_id=session['id']))
 
 @app.route('/odbij_zahtev/<int:termin_id>', methods=['GET'])
@@ -272,9 +277,15 @@ def odbij_zahtev(termin_id):
         return redirect(url_for('home'))
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('UPDATE termini SET status_termina = "odbijen" WHERE id = %s', (termin_id,))
-    mysql.connection.commit()
+    cursor.execute('SELECT t.id_sale FROM termini t JOIN balon_sale s ON t.id_sale = s.id_sale WHERE t.id = %s AND s.id_vlasnika = %s', (termin_id, session['id']))
+    sala = cursor.fetchone()
+
+    if sala:
+        cursor.execute('UPDATE termini SET status_termina = "odbijen" WHERE id = %s', (termin_id,))
+        mysql.connection.commit()
+    
     return redirect(url_for('moji_zahtevi', sala_id=session['id']))
+
 
 @app.route('/profil', methods=['GET'])
 def profil():
@@ -351,6 +362,54 @@ def deaktiviraj_profil():
     
     # Redirekcija na stranicu oproštaja
     return render_template('stranica_oprostaja.html')
+
+@app.route('/izmeni_salu/<int:sala_id>', methods=['GET', 'POST'])
+def izmeni_salu(sala_id):
+    if 'loggedin' not in session or not session['loggedin'] or session['tip'] == 2:
+        return redirect(url_for('home'))
+    
+    msg = ''
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # Dohvatanje podataka o sali za prikaz u formi za izmenu
+    cursor.execute('SELECT * FROM balon_sale WHERE id_sale = %s', (sala_id,))
+    sala = cursor.fetchone()
+
+    if request.method == 'POST':
+        novi_naziv = request.form['novi_naziv']
+        nova_cena = request.form['nova_cena']
+        novi_opis = request.form['novi_opis']
+        
+        if sala and sala['id_vlasnika'] == session['id']:
+            cursor.execute('UPDATE balon_sale SET naziv_sale = %s, cena_po_satu = %s, opis = %s WHERE id_sale = %s',
+                           (novi_naziv, nova_cena, novi_opis, sala_id))
+            mysql.connection.commit()
+            return redirect(url_for('sale'))
+        else:
+            return redirect(url_for('home'))
+
+    if sala:
+        return render_template('izmeni_salu.html', sala=sala)
+    else:
+        return redirect(url_for('home'))
+
+@app.route('/obrisi_salu/<int:sala_id>', methods=['GET'])
+def obrisi_salu(sala_id):
+    if 'loggedin' not in session or not session['loggedin']:
+        return redirect(url_for('home'))
+
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT id_vlasnika FROM balon_sale WHERE id_sale = %s', (sala_id,))
+    result = cursor.fetchone()
+
+    # Provera da li je korisnik vlasnik te sale
+    if result and result[0] == session['id']:
+        cursor.execute('DELETE FROM balon_sale WHERE id_sale = %s', (sala_id,))
+        mysql.connection.commit()
+
+    return redirect(url_for('sale'))
+
+
 
 
 if __name__ == '__main__':
