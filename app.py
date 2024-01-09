@@ -409,6 +409,53 @@ def obrisi_salu(sala_id):
 
     return redirect(url_for('sale'))
 
+@app.route('/oceni/<int:entity_id>', methods=['GET', 'POST'])
+def oceni(entity_id):
+    if 'loggedin' not in session or not session['loggedin']:
+        return redirect(url_for('home'))
+
+    cursor = mysql.connection.cursor()
+
+    if request.method == 'POST':
+        ocena = request.form['ocena']
+        komentar = request.form['komentar']
+
+        if session['tip'] != 1:  # Igrač ocenjuje salu
+            cursor.execute('SELECT * FROM termini t INNER JOIN balon_sale bs ON t.id_sale = bs.id_sale WHERE t.id_igraca = %s AND t.status_termina = "potvrdjen" AND bs.id_sale = %s', (session['id'], entity_id))
+            termini = cursor.fetchall()
+            if not termini:
+                return redirect(url_for('home'))
+
+            cursor.execute('INSERT INTO ocene_sale (id_sale, id_igraca, ocena, komentar) VALUES (%s, %s, %s, %s)', (entity_id, session['id'], ocena, komentar))
+            mysql.connection.commit()
+
+        elif session['tip'] != 2:  # Vlasnik sale ocenjuje igrača
+            cursor.execute('SELECT * FROM termini t INNER JOIN balon_sale bs ON t.id_sale = bs.id_sale WHERE bs.id_vlasnika = %s AND t.id_igraca = %s AND t.status_termina = "potvrdjen"', (session['id'], entity_id))
+            termini = cursor.fetchall()
+            if not termini:
+                return redirect(url_for('home'))
+
+            cursor.execute('INSERT INTO ocene_igraca (id_igraca, id_vlasnika, ocena, komentar) VALUES (%s, %s, %s, %s)', (entity_id, session['id'], ocena, komentar))
+            mysql.connection.commit()
+
+        return redirect(url_for('home'))
+
+    # Renderovanje forme za ocenjivanje
+    if session['tip'] != 1:  # Igrač ocenjuje salu
+        cursor.execute('SELECT * FROM balon_sale WHERE id_sale = %s', (entity_id,))
+        sala = cursor.fetchone()
+        if not sala:
+            return redirect(url_for('home'))
+        idsal = sala[0]
+        return render_template('oceni.html', entity=sala,entid=idsal)
+
+    elif session['tip'] != 2:  # Vlasnik sale ocenjuje igrača
+        cursor.execute('SELECT * FROM accounts WHERE id = %s', (entity_id,))
+        igrac = cursor.fetchone()
+        if not igrac:
+            return redirect(url_for('home'))
+        ident = igrac[0]
+        return render_template('oceni.html', entity=igrac,entid=ident)
 
 
 

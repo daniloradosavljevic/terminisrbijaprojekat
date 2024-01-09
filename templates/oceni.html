@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Oceni</h1>
+<form method="POST" action="{{ url_for('oceni', entity_id=entid) }}" enctype="multipart/form-data">
+    {% if session['tip'] == 2 %}
+        <h2>Oceni salu</h2>
+        <p>{{ entity.naziv_sale }}</p>
+        <label for="ocena">Ocena:</label>
+        <input type="radio" id="ocena1" name="ocena" value="1">
+        <label for="ocena1">1</label>
+        <input type="radio" id="ocena2" name="ocena" value="2">
+        <label for="ocena2">2</label>
+        <input type="radio" id="ocena3" name="ocena" value="3">
+        <label for="ocena3">3</label>
+        <input type="radio" id="ocena4" name="ocena" value="4">
+        <label for="ocena4">4</label>
+        <input type="radio" id="ocena5" name="ocena" value="5">
+        <label for="ocena5">5</label>
+    {% elif session['tip'] == 1 %}
+        <h2>Oceni igraca</h2>
+        <p>{{ entity.username }}</p>
+        <label for="ocena">Ocena:</label>
+        <input type="radio" id="ocena1" name="ocena" value="1">
+        <label for="ocena1">1</label>
+        <input type="radio" id="ocena2" name="ocena" value="2">
+        <label for="ocena2">2</label>
+        <input type="radio" id="ocena3" name="ocena" value="3">
+        <label for="ocena3">3</label>
+        <input type="radio" id="ocena4" name="ocena" value="4">
+        <label for="ocena4">4</label>
+        <input type="radio" id="ocena5" name="ocena" value="5">
+        <label for="ocena5">5</label>
+    {% endif %}
+    <br>
+    <label for="komentar">Komentar:</label><br>
+    <textarea id="komentar" name="komentar" rows="4" cols="50"></textarea><br><br>
+    <input type="submit" value="Oceni">
+</form>
+{% endblock %}
