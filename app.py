@@ -457,6 +457,21 @@ def oceni(entity_id):
         ident = igrac[0]
         return render_template('oceni.html', entity=igrac,entid=ident)
 
+@app.route('/ocene_sala/<int:sala_id>')
+def ocene_sala(sala_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT os.ocena, os.komentar, a.ime, a.prezime FROM ocene_sale os JOIN accounts a ON os.id_igraca = a.id WHERE os.id_sale = %s', (sala_id,))
+    ocene_sala = cursor.fetchall()
+    return render_template('ocene_sala.html', ocene=ocene_sala)
+
+@app.route('/ocene_igraca/<int:igrac_id>')
+def ocene_igraca(igrac_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT oi.ocena, oi.komentar, a.ime, a.prezime FROM ocene_igraca oi JOIN accounts a ON oi.id_igraca = a.id WHERE oi.id_igraca = %s', (igrac_id,))
+    ocene_igraca = cursor.fetchall()
+
+    return render_template('ocene_igraca.html', ocene=ocene_igraca)
+
 
 
 if __name__ == '__main__':

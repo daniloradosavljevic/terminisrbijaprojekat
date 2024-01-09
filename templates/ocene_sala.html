@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h1>Ocene Sale</h1>
+    <ul>
+        {% if ocene %}
+            {% for ocena in ocene %}
+                <li>Ocena: {{ ocena[0] }}, Komentar: {{ ocena[1] }} - Ocenio/la: {{ ocena[2] }} {{ ocena[3] }}</li>
+            {% endfor %}
+        {% else %}
+            <li>Nema ocena za ovu salu</li>
+        {% endif %}
+    </ul>
+{% endblock %}
