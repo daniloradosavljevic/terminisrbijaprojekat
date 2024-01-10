@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <h2>Korisnici</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Telefon</th>
+            <th>Account Type</th>
+            <th>Action</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>{{ user[3] }}</td>
+            <td>{{ user[4] }}</td>
+            <td>{{ user[5] }}</td>
+            <td>{{ user[6] }}</td>
+
+            <td>
+                {% if user[7] == 0 %} Admin {% elif user[7] == 1 %} Korisnik {% elif user[7] == 2 %} Izdavac {% else %} Unknown {% endif %}
+            </td>
+
+            <td>
+                <a href="{{ url_for('edit_user', user_id=user[0]) }}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Izlozene Sale</h2>
+    <table border="1">
+        <tr>
+            <th>ID Sale</th>
+            <th>ID Vlasnika</th>
+            <th>Naziv Sale</th>
+            <th>Cena</th>
+            <th>Opis</th>
+            <th>Grad</th>
+            <th>Adresa</th>
+            <th>Action</th>
+        </tr>
+        {% for sala in izlozene_sale %}
+        <tr>
+            <td>{{ sala[0] }}</td>
+            <td>{{ sala[1] }}</td>
+            <td>{{ sala[2] }}</td>
+            <td>{{ sala[3] }}</td>
+            <td>{{ sala[4] }}</td>
+            <td>{{ sala[5] }}</td>
+            <td>{{ sala[6] }}</td>
+            <td>
+                <a href="{{ url_for('edit_sale', sale_id=sala[0]) }}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
