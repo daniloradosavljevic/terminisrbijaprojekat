@@ -1,8 +1,58 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %}
 
-{% block body %}
+    <style>
+      .header{
+          height: 700px;
+          width: 100%;
+          background-image: url("{{ url_for('static', filename='images/slika1.jpg') }}");
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+      }
+      .header h1{
+          font-size: 80px;
+          font-weight: 700px;
+          color: black;
+          margin-top: 235px;
+      }
+      #col {
+          border-left: 1px solid green;
+      }
+      #col1{
+        border-left: 1px solid green;
+        border-right: 1px solid green;
+      }
+  </style>
+</head>
 
-{% for sala in sve_sale %}
+<body>
+<!-- Header -->
+<div class="container">
+    <div class="row">
+      <div class="col-12" id="col1">
+        <h3 class="display-3 text-success text-center py-3">Pogledajte listu svih balon sala</h3>
+        <!-- Dugmici -->
+        <div class="container">
+          <div class="row">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="input-group rounded">
+                  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                  <span class="input-group-text border-0" id="search-addon">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+              </div>
+              <div>
+                <a href="{{ url_for('dodavanjesale') }}" class="display-5 pb-5 px-5 text-success d-none d-xl-block"><i class="fa-sharp fa-thin fa-plus fa-xl"></i></a>
+              </div>
+         </div>
+          </div>
+        </div>
+        <!-- Lista -->
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for sala in sve_sale %}
 
 <div class="col">
     <div class="card">
@@ -24,6 +74,7 @@
 </div>
 {% endfor %}
 
-
-
+          </div>
+          </div>
+      </div>
 {% endblock %}

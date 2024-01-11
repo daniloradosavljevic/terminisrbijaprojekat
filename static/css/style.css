@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins%3Awght%40400%3B500&display=swap%27%29%3B");
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn_1{
+    background-color: rgb(65, 234, 65);
+    color: white;
+}
+.btn_1:hover{
+    background-color: rgb(51, 185, 51);
+    color: whitesmoke;
+}
+
+.btn_2{
+    background-color: rgb(0, 62, 0);
+    color: white;
+}
+
+.btn_2:hover{
+    background-color: rgb(0, 38, 0);
+    color: whitesmoke;
+}
+
+/* Login */
+
+.box-area{
+    width: 930px;
+    border-radius: 30px;
+}
+
+/* Right Box */
+
+.right-box{
+    padding: 40px 30px 40px 40px;
+}
+
+/* Left Box */
+
+.left-box {
+    border-radius: 30px;
+}
+
+/* Placeholder */
+
+::placeholder{
+    font-size: 16px;
+}
+
+/* Responce */
+
+@media only screen and (max-width: 768px){
+    .box-area{
+        margin: 0 10px;
+    }
+    .left-box{
+        height: 100px;
+        overflow: hidden;
+    }
+    .right-box{
+        padding: 20px;
+    }
+}
+
+/*  Background  */
+.bg-image {
+    background-image: url('../images/pozadina.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Viewport height */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dodavanje sale css */
+
+.dodavanje_s1{
+    height: 70px;
+
+}
+
+.dodavanje_s2{
+    height: 200px;
+}
+
+.dodavanje_s3{
+    margin: auto;
+    padding: 2px;
+}
+
+.bg-image_dodavanje_sale {
+    background-image: url('../images/dodavanje_sale_background.png');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+

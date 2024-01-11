@@ -9,7 +9,6 @@ from werkzeug.utils import secure_filename
 from mapa import generate_embed_code_from_address
 from datetime import datetime
 
-
 app = Flask(__name__)
 
 app.secret_key = "super_tajni_kljuc"
@@ -234,8 +233,12 @@ def sale():
     sve_sale = cursor.fetchall()
     return render_template("sale.html", sve_sale=sve_sale)
 
+<<<<<<< HEAD
 
 @app.route("/sale/<int:sala_id>", methods=["GET", "POST"])
+=======
+@app.route('/sale/<int:sala_id>',methods=['GET','POST'])
+>>>>>>> 197fd74d81fa2536b8a22e09a291acfded9027da
 def prikazivanje_sale(sala_id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sala_id,))
@@ -248,7 +251,11 @@ def prikazivanje_sale(sala_id):
             "detalji_sale.html", sala=sala, slike=slike, kod_mape=kod_mape
         )
     else:
+<<<<<<< HEAD
         return "Sala nije pronađena", 404
+=======
+        return 'Sala nije pronađena', 404  
+>>>>>>> 197fd74d81fa2536b8a22e09a291acfded9027da
 
 
 from flask import request

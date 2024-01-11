@@ -1,15 +1,14 @@
 {% extends 'base.html' %} {% block body %}
 
-</br>
-</br>
-</br>
-</br>
-</br>
-<div align="center">
-    <div align="center" class="border">
-        <div class="header">
-            <h1 class="word">Index</h1>
-            {% if ulogovan == True %}
+<!-- Banner -->
+<div class="header x-auto d-none d-md-block">
+    <div class="container">
+        <div class="row text center">
+            <div class="col-lg-12">
+                <div>
+                    <h1 class="text-success text-uppercase">Mesto za sve<br>balon sale</h1>
+                </div>
+            </div>
         </div>
         </br>
         </br>
@@ -31,5 +30,163 @@
 
     </div>
 </div>
-
-{% endblock %}
+<!-- Banner 2 -->
+<div class="text-center d-md-none py-5">
+    <h1 class="text-success py-5 display-1">Neki kurac<br>jos vise kurca</h1>
+    <a class="btn btn-success btn-lg rounded-pill">Dugme</a>
+</div>
+<!-- About Columns -->
+<div class="text-center">
+    <h3 class="py-5 display-1 text-success"><u>Ko smo mi i koje uslove nudimo?</u></h3>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col" id="col">
+            <h3 class="pt-3">O nama</h3>
+            <p class="lead">
+                This is a lead paragraph. It stands out from regular paragraphs.This is a lead paragraph. It stands out from regular paragraphs.This is a lead paragraph. It stands out from regular paragraphs.
+            </p>
+        </div>
+        <div class="col" id="col">
+            <h3 class="pt-3">Za igrace</h3>
+            <p class="lead">
+                This is a lead paragraph. It stands out from regular paragraphs.This is a lead paragraph. It stands out from regular paragraphs.This is a lead paragraph. It stands out from regular paragraphs.
+            </p>
+        </div>
+        <div class="col" id="col">
+            <h3 class="pt-3">Za Balon sale</h3>
+            <p class="lead">
+                This is a lead paragraph. It stands out from regular paragraphs.This is a lead paragraph. It stands out from regular paragraphs.This is a lead paragraph. It stands out from regular paragraphs.
+            </p>
+        </div>
+    </div>
+</div>
+<!-- FullScrene Column -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 d-none d-xl-block py-5" id="col1">
+            <h3 class="display-4 text-success text-center">Rezervisite Termin</h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <a href="#" class="btn btn-success">Vidi jos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="sale.html" class="btn btn-success btn-lg text-center">Vidi jos</a>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Column -->
+        <div class="col-12 d-block d-xl-none" id="col1">
+            <h3 class="display-4 text-success text-center">Rezervisite Termin</h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col d-flex justify-content-center py-3">
+                        <br>
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-success text-center">Vidi jos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-center py-3">
+                        <br>
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ url_for('static', filename='images/slika1.jpg') }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Ime Balon sale</h5>
+                                <p class="card-text">Neki sranje opis za balon salu.</p>
+                                <div class="text-center">
+                                    <a href="" class="btn btn-success text-center">Vidi jos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="" class="btn btn-success text-center">Vidi jos</a>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
