@@ -23,13 +23,12 @@
         </br>
         <a href="{{ url_for('logout') }}" class="btn">Logout</a>
         <br><br> {% if session['tip'] == 0 %}
-        <a href="{{ url_for('admin_dashboard') }}" class="btn">Admin Dashboard</a> {% elif session['tip'] == 1 %}
-        <a href="{{ url_for('dodavanjesale') }}" class="btn">Dodaj balon salu</a> {% elif session['tip'] == 2 %}
-        <a href="{{ url_for('dodavanjesale') }}" class="btn">Izdavac Dashboard</a> {% else %}
+        <a href="{{ url_for('admin_dashboard') }}" class="btn">Admin Dashboard</a> {% endif %} {% if session['tip'] == 1 %}
+        <a href="{{ url_for('dodavanjesale') }}" class="btn">Dodaj balon salu</a> {% endif %} {% if session['tip'] == 2 %}
+        <a href="{{ url_for('dodavanjesale') }}" class="btn">Dodaj balon salu</a> {% endif %} {% else %}
         <a href="{{ url_for('login') }}" class="btn">Sign in</a>
         <a href="{{ url_for('register') }}" class="btn">Register</a> {% endif %}
-        <!-- Handle other cases if needed -->
-        {% endif %}
+
     </div>
 </div>
 
