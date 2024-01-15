@@ -234,7 +234,7 @@ def sale():
     return render_template("sale.html", sve_sale=sve_sale)
 
 
-@app.route("/sale/<int:sala_id>", methods=["GET", "POST"])
+@app.route("/sala:<int:sala_id>", methods=["GET", "POST"])
 def prikazivanje_sale(sala_id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sala_id,))
