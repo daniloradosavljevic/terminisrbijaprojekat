@@ -250,9 +250,6 @@ def prikazivanje_sale(sala_id):
         return "Sala nije pronađena", 404
 
 
-from flask import request
-
-
 @app.route("/zatrazi_termin/<int:sala_id>", methods=["GET", "POST"])
 def zatrazi_termin(sala_id):
     if "loggedin" not in session or not session["loggedin"] or session["tip"] == 1:
