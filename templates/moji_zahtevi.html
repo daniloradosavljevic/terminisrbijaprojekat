@@ -9,6 +9,7 @@
             <th>Status termina</th>
             <th>Vreme</th>
             <th>Sala</th>
+            <th>Ocene igrača</th>
             <th>Akcija</th>
         </tr>
     </thead>
@@ -20,11 +21,15 @@
             <td>{{ zahtev['status_termina'] }}</td>
             <td>{{ zahtev['vreme'] }}</td>
             <td>{{ zahtev['naziv_sale'] }}</td>
+            <td><a href="{{ url_for('ocene_igraca', igrac_id=zahtev['id_igraca']) }}">Pogledaj</a></td>
             <td>
                 {% if zahtev['status_termina'] == 'zatrazen' %}
                     <a href="{{ url_for('odobri_zahtev', termin_id=zahtev['id']) }}">Odobri</a>
                     <a href="{{ url_for('odbij_zahtev', termin_id=zahtev['id']) }}">Odbij</a>
                 
+                {% endif %}
+                {% if zahtev['status_termina'] == 'odobren' and zahtev['ts'] %}
+                <a href="{{ url_for('oceni', entity_id=zahtev['id_igraca']) }}">Oceni</a>
                 {% endif %}
             </td>
         </tr>

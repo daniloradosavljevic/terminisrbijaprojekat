@@ -7,7 +7,7 @@ import secrets
 import uuid, os
 from werkzeug.utils import secure_filename
 from mapa import generate_embed_code_from_address
-from datetime import datetime
+from datetime import datetime,timedelta
 
 app = Flask(__name__)
 
@@ -228,7 +228,13 @@ def file_size_allowed(file):
 def sale():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute(
-        "SELECT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike FROM balon_sale LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale GROUP BY balon_sale.id_sale"
+        """
+        SELECT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike, ROUND(AVG(ocene_sale.ocena),1) AS prosecna_ocena
+        FROM balon_sale
+        LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale
+        LEFT JOIN ocene_sale ON balon_sale.id_sale = ocene_sale.id_sale
+        GROUP BY balon_sale.id_sale
+        """
     )
     sve_sale = cursor.fetchall()
     return render_template("sale.html", sve_sale=sve_sale)
@@ -343,6 +349,14 @@ def moji_zahtevi():
         (session["id"],),
     )
     zahtevi_termina = cursor.fetchall()
+    now_time = datetime.now()
+
+    # Prolazi kroz svaki zahtev i postavi ts
+    for zahtev in zahtevi_termina:
+        vreme_zahteva = zahtev['vreme']
+        # Ako je trenutno vreme bar 1 dan ispred vremena iz zahteva, postavi ts na True, inače False
+        zahtev['ts'] = now_time - vreme_zahteva >= timedelta(days=1)
+
     return render_template("moji_zahtevi.html", zahtevi=zahtevi_termina)
 
 
@@ -610,6 +624,9 @@ def ocene_igraca(igrac_id):
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
+    if "loggedin" not in session or not session["loggedin"] or session['tip'] != 0:
+        return redirect(url_for("home"))
+    
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM accounts")
     users = cur.fetchall()
@@ -626,6 +643,8 @@ def admin_dashboard():
 
 @app.route("/admin/edit_user/<int:user_id>", methods=["GET", "POST"])
 def edit_user(user_id):
+    if "loggedin" not in session or not session["loggedin"] or session['tip'] != 0:
+        return redirect(url_for("home"))
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM accounts WHERE id = %s", (user_id,))
     user = cur.fetchone()
@@ -665,6 +684,8 @@ def edit_user(user_id):
 
 @app.route("/admin/edit_sale/<int:sale_id>", methods=["GET", "POST"])
 def edit_sale(sale_id):
+    if "loggedin" not in session or not session["loggedin"] or session['tip'] != 0:
+        return redirect(url_for("home"))
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sale_id,))
     sale = cur.fetchone()

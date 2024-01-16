@@ -56,9 +56,11 @@
                 <li class="nav-item">
                     <a href="{{ url_for('sale') }}" class="nav-link text-success">Balon Sale</a>
                 </li>
+                {% if 'loggedin' in session and session['loggedin'] and session['tip'] == 0 %}
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-success">Dashboard</a>
+                  <a href="{{ url_for('admin_dashboard') }}" class="nav-link text-success">Dashboard</a>
               </li>
+                {% endif %}
                 <li class="nav-item d-md-none">
                     <a class="nav-link text-success">LogIn</a>
                 </li>

@@ -11,4 +11,10 @@
 </div>
 {% endif %}
 
-<a href="{{ url_for('zatrazi_termin', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Zatraži termin</a> {% endblock %}
+
+{% if session['tip'] == 2 %}
+<a href="{{ url_for('zatrazi_termin', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Zatraži termin</a> 
+<a href="{{ url_for('oceni', entity_id=sala['id_sale']) }}" class="btn btn-success text-center">Oceni salu</a>
+{% endif %}
+<a href="{{ url_for('ocene_sala', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Pogledaj ocene</a>
+{% endblock %}

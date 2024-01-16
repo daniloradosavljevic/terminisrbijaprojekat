@@ -13,30 +13,7 @@
         </br>
         </br>
         </br>
-        <div align="center">
-            <div align="center" class="border">
-                <div class="header">
-                    <h1 class="word">Index</h1>
-                    {% if ulogovan == True %}
-                </div>
-                </br>
-                </br>
-                </br>
-                <h1 class="bottom">
-                    Zdravo {{session.username}}!!</br>
-                    </br> Dobrodosao
-                </h1>
-                </br>
-                </br>
-                </br>
-                <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-                <br><br> {% if session['tip'] == 0 %}
-                <a href="{{ url_for('admin_dashboard') }}" class="btn">Admin Dashboard</a> {% endif %} {% if session['tip'] == 1 %}
-                <a href="{{ url_for('dodavanjesale') }}" class="btn">Dodaj balon salu</a> {% endif %} {% else %}
-                <a href="{{ url_for('login') }}" class="btn">Sign in</a>
-                <a href="{{ url_for('register') }}" class="btn">Register</a> {% endif %}
-
-            </div>
+       
         </div>
 
     </div>
@@ -159,9 +136,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="text-center">
-                    <a href="sale.html" class="btn btn-success btn-lg text-center">Vidi jos</a>
                 </div>
             </div>
         </div>
