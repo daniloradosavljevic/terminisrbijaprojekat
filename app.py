@@ -34,11 +34,27 @@ mysql = MySQL(app)
 @app.route("/")
 def home():
     ulogovan = False
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute(query = """
+    SELECT bs.id_sale, bs.naziv_sale, bs.grad, MAX(ss.putanja) AS slika
+    FROM (
+        SELECT t.id_sale, COUNT(*) AS broj_termina
+        FROM termini t
+        GROUP BY t.id_sale
+        ORDER BY broj_termina DESC
+        LIMIT 3
+    ) popularne_sale
+    JOIN balon_sale bs ON popularne_sale.id_sale = bs.id_sale
+    LEFT JOIN slike_sala ss ON bs.id_sale = ss.id_sale
+    GROUP BY bs.id_sale, bs.naziv_sale, bs.grad
+    ORDER BY popularne_sale.broj_termina DESC;
+    """)
+    popularne = cursor.fetchall()
     if "loggedin" in session and session["loggedin"]:
         ulogovan = True
-        return render_template("index.html", ulogovan=ulogovan)
+        return render_template("index.html", ulogovan=ulogovan,popularne=popularne)
     else:
-        return render_template("index.html", ulogovan=ulogovan)
+        return render_template("index.html", ulogovan=ulogovan,popularne=popularne)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -227,15 +243,30 @@ def file_size_allowed(file):
 @app.route("/sale", methods=["GET", "POST"])
 def sale():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute(
-        """
-        SELECT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike, ROUND(AVG(ocene_sale.ocena),1) AS prosecna_ocena
-        FROM balon_sale
-        LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale
-        LEFT JOIN ocene_sale ON balon_sale.id_sale = ocene_sale.id_sale
-        GROUP BY balon_sale.id_sale
-        """
-    )
+
+    if request.method == "POST":
+        pretraga = request.form.get("pretraga")
+        query = """
+            SELECT DISTINCT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike, ROUND(AVG(ocene_sale.ocena), 1) AS prosecna_ocena
+            FROM balon_sale
+            LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale
+            LEFT JOIN ocene_sale ON balon_sale.id_sale = ocene_sale.id_sale
+            WHERE (slike_sala.id_slike_sale IS NOT NULL OR ocene_sale.id IS NOT NULL)
+                  AND (balon_sale.grad LIKE %s OR balon_sale.naziv_sale LIKE %s)
+            GROUP BY balon_sale.id_sale
+            """
+        cursor.execute(query, (f"%{pretraga}%", f"%{pretraga}%"))
+    else:
+        query = """
+            SELECT DISTINCT balon_sale.*, MIN(slike_sala.putanja) AS putanja_slike, ROUND(AVG(ocene_sale.ocena), 1) AS prosecna_ocena
+            FROM balon_sale
+            LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale
+            LEFT JOIN ocene_sale ON balon_sale.id_sale = ocene_sale.id_sale
+            WHERE slike_sala.id_slike_sale IS NOT NULL OR ocene_sale.id IS NOT NULL
+            GROUP BY balon_sale.id_sale
+            """
+        cursor.execute(query)
+
     sve_sale = cursor.fetchall()
     return render_template("sale.html", sve_sale=sve_sale)
 
@@ -285,7 +316,7 @@ def zatrazi_termin(sala_id):
         mysql.connection.commit()
         msg = "Uspešno ste zatražili termin u ovoj sali!"
         return render_template("termin.html", sala=sala, msg=msg)
-    return render_template("termin.html", sala=sala)
+    return render_template("termin.html",sala=sala)
 
 
 @app.route("/moji_termini")
@@ -620,6 +651,21 @@ def ocene_igraca(igrac_id):
     ocene_igraca = cursor.fetchall()
 
     return render_template("ocene_igraca.html", ocene=ocene_igraca)
+
+@app.route("/moje_sale")
+def moje_sale():
+    if "loggedin" not in session or not session["loggedin"] or session["tip"] == 2:
+        return redirect(url_for("home"))
+
+    id_vlasnika = session["id"]
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute(
+        "SELECT * FROM balon_sale WHERE id_vlasnika = %s",
+        (id_vlasnika,),
+    )
+    sale = cursor.fetchall()
+    return render_template("moje_sale.html", sale=sale)
+
 
 
 @app.route("/admin/dashboard")

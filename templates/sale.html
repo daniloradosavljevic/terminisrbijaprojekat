@@ -37,11 +37,14 @@
             <div class="d-flex justify-content-between">
               <div>
                 <div class="input-group rounded">
-                  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                  <span class="input-group-text border-0" id="search-addon">
-                    <i class="fas fa-search"></i>
-                  </span>
-                </div>
+                  <form method="post" action="{{ url_for('sale') }}">
+                      <input type="search" class="form-control rounded" name="pretraga" placeholder="Pretraži" aria-label="Search" aria-describedby="search-addon" />
+                      <span class="input-group-text border-0" id="search-addon">
+                          <button type="submit" style="background: none; border: none; cursor: pointer;"><i class="fas fa-search"></i></button>
+                      </span>
+                  </form>
+              </div>
+              
               </div>
               {% if session['tip'] == 1 %}
               <div>
@@ -74,7 +77,7 @@
                 <p class="px-5">{{ sala['grad'] }}</p>
             </i><br>
             <div class="text-center py-2">
-                <a href="{{ url_for('prikazivanje_sale', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Pogledaj jos</a>
+                <a href="{{ url_for('prikazivanje_sale', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Pogledaj još</a>
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@
     <p>Vreme: {{ termin.vreme }}</p>
     {% if termin.status_termina == 'zatrazen' %}
         <form action="{{ url_for('otkazi_termin', termin_id=termin.id) }}" method="post">
-            <input type="submit" class="btn" value="Otkazi termin">
+            <input type="submit" class="btn" value="Otkazi termin" onclick="return confirm('Da li ste sigurni da želite da otkažete termin?')">
         </form>
     {% else %}
         <p>Status termina: {{ termin.status_termina }}</p>
