@@ -582,7 +582,7 @@ def oceni(entity_id):
 
         if session["tip"] != 1:  # Igrač ocenjuje salu
             cursor.execute(
-                'SELECT * FROM termini t INNER JOIN balon_sale bs ON t.id_sale = bs.id_sale WHERE t.id_igraca = %s AND t.status_termina = "potvrdjen" AND bs.id_sale = %s',
+                'SELECT * FROM termini t INNER JOIN balon_sale bs ON t.id_sale = bs.id_sale WHERE t.id_igraca = %s AND t.status_termina = "odobren" AND bs.id_sale = %s',
                 (session["id"], entity_id),
             )
             termini = cursor.fetchall()
