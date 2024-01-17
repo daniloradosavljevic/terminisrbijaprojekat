@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Oceni</h1>
-<form method="POST" action="{{ url_for('oceni', entity_id=entid) }}" enctype="multipart/form-data">
+
+<div class="container py-5">
+    <div class="row row-centered pos ">
+        <div class="col-12 col-centered" id="col1">
+            <div class="d-flex justify-content-center py-5">
+        <form method="POST" action="{{ url_for('oceni', entity_id=entid) }}" enctype="multipart/form-data">
     {% if session['tip'] == 2 %}
-        <h2>Oceni salu</h2>
+    <h3 class="display-3 text-success text-center py-3">Oceni salu</h3>
         <p>{{ entity.naziv_sale }}</p>
-        <label for="ocena">Ocena:</label>
+        <label for="ocena" class="h3 text-success text-center py-3">Ocena:</label>
         <input type="radio" id="ocena1" name="ocena" value="1">
         <label for="ocena1">1</label>
         <input type="radio" id="ocena2" name="ocena" value="2">
@@ -17,9 +21,9 @@
         <input type="radio" id="ocena5" name="ocena" value="5">
         <label for="ocena5">5</label>
     {% elif session['tip'] == 1 %}
-        <h2>Oceni igraca</h2>
+    <h3 class="display-3 text-success text-center py-3">Oceni igraca</h3>
         <p>{{ entity.username }}</p>
-        <label for="ocena">Ocena:</label>
+        <label for="ocena" class="h3 text-success text-center py-3">Ocena:</label>
         <input type="radio" id="ocena1" name="ocena" value="1">
         <label for="ocena1">1</label>
         <input type="radio" id="ocena2" name="ocena" value="2">
@@ -32,8 +36,13 @@
         <label for="ocena5">5</label>
     {% endif %}
     <br>
-    <label for="komentar">Komentar:</label><br>
+    <label for="komentar" class="h3 text-success text-center py-3">Komentar:</label><br>
     <textarea id="komentar" name="komentar" rows="4" cols="50"></textarea><br><br>
-    <input type="submit" value="Oceni">
+    <input type="submit" class="btn btn-success" style="-webkit-box-shadow:0px 0px 30px 3px rgba(0,0,0,0.6);
+    -moz-box-shadow: 0px 0px 30px 3px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 30px 3px rgba(0,0,0,0.6);" value="Oceni">
 </form>
+  
+            </div>
+        </div>
 {% endblock %}

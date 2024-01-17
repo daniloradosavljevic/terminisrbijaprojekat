@@ -1,42 +1,48 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="msg">{{ msg }}</div>
+<div class="container py-5">
+    <div class="row row-centered pos">
+        <div class="col-12 col-centered" id="col1">
+            <h3 class="display-3 text-success text-center py-3">Zatražite termin u sali {{ sala['naziv_sale'] }}</h3>
+            <h1 class="display-4 text-success text-center py-3">Cena termina iznosi <span class="badge rounded-pill bg-success">{{ sala['cena_po_satu'] }} RSD</span></h1>
+            <div class="d-flex justify-content-center py-5">
+            <form action="" method="post">
+                <p class="h3 text-success text-center py-3">Odaberite datum i vreme</p>
+                <input type="datetime-local" name="vreme" id="vreme" step="3600" min="{{ current_time }}"><br><br>
+                <input type="submit" class="btn btn-success" value="Zatraži termin"></br>
+            </form>
+            </div>
 
-<h1>Zatražite termin u sali {{ sala['naziv_sale'] }}</h1>
-<h1>Cena termina iznosi {{ sala['cena_po_satu'] }} RSD</h1>
+            <script>
+                var now = new Date();
+                var year = now.getFullYear();
+                var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+                var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+                var hours = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
+                var minutes = '00'; // Postavljanje minuta na 00
 
-<form action="" method="post">
-    <p>Odaberite datum i vreme</p>
-    <input type="datetime-local" name="vreme" id="vreme" step="3600" min="{{ current_time }}">
-    <input type="submit" class="btn" value="Zatraži termin"></br>
-</form>
+                var current_time = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+                document.getElementById('vreme').setAttribute('min', current_time);
 
-<script>
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
-    var day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
-    var hours = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
-    var minutes = '00'; // Postavljanje minuta na 00
+                // Dodavanje event listenera za promenu vrednosti
+                document.getElementById('vreme').addEventListener('change', function() {
+                    var selected_time = new Date(document.getElementById('vreme').value);
+                    var selected_hours = selected_time.getHours() < 10 ? '0' + selected_time.getHours() : selected_time.getHours();
+                    var selected_minutes = '00'; // Postavljanje minuta na 00
 
-    var current_time = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
-    document.getElementById('vreme').setAttribute('min', current_time);
+                    // Pravljenje novog formata datuma
+                    var formatted_time = selected_time.getFullYear() + '-' +
+                                        ('0' + (selected_time.getMonth() + 1)).slice(-2) + '-' +
+                                        ('0' + selected_time.getDate()).slice(-2) + 'T' +
+                                        selected_hours + ':' +
+                                        selected_minutes;
 
-    // Dodavanje event listenera za promenu vrednosti
-    document.getElementById('vreme').addEventListener('change', function() {
-        var selected_time = new Date(document.getElementById('vreme').value);
-        var selected_hours = selected_time.getHours() < 10 ? '0' + selected_time.getHours() : selected_time.getHours();
-        var selected_minutes = '00'; // Postavljanje minuta na 00
+                    document.getElementById('vreme').value = formatted_time;
+                });
+            </script>
+            </div>
+        </div>
 
-        // Pravljenje novog formata datuma
-        var formatted_time = selected_time.getFullYear() + '-' +
-                             ('0' + (selected_time.getMonth() + 1)).slice(-2) + '-' +
-                             ('0' + selected_time.getDate()).slice(-2) + 'T' +
-                             selected_hours + ':' +
-                             selected_minutes;
-
-        document.getElementById('vreme').value = formatted_time;
-    });
-</script>
 
 {% endblock %}

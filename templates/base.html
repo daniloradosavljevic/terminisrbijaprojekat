@@ -41,7 +41,7 @@
 <body>
    <!-- Navbar -->
    <nav class="navbar navbar-expand-md navbar-light">
-    <div class="container-xxl">
+    <div class="container-sm">
         <a href="{{ url_for('home') }}" class="navbar-brand">
           <img src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="130" height="50">
         </a>
@@ -61,9 +61,11 @@
                   <a href="{{ url_for('admin_dashboard') }}" class="nav-link text-success">Dashboard</a>
               </li>
                 {% endif %}
+                {% if "loggedin" not in session or not session["loggedin"] %}
                 <li class="nav-item d-md-none">
-                    <a class="nav-link text-success">LogIn</a>
+                    <a href="{{ url_for('login') }}" class="nav-link text-success">Login</a>
                 </li>
+                {% endif %}
                 {% if 'loggedin' in session and session['loggedin'] %}
                 <!-- Korisnik je ulogovan, ne prikazujemo dugme za login -->
             {% else %}

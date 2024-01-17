@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 {% block body %}
-    <h1>Ocene Sale</h1>
-    <ul>
-        {% if ocene %}
-            {% for ocena in ocene %}
-                <li>Ocena: {{ ocena[0] }}, Komentar: {{ ocena[1] }} - Ocenio/la: {{ ocena[2] }} {{ ocena[3] }}</li>
-            {% endfor %}
-        {% else %}
-            <li>Nema ocena za ovu salu</li>
-        {% endif %}
-    </ul>
+
+    <div class="container py-5">
+        <div class="row ">
+            <div class="col-12" id="col1">
+                <h3 class="display-3 text-success text-center py-3">Ocene sale</h3>
+
+                        <ul>
+                            {% if ocene %}
+                                {% for ocena in ocene %}
+                                <div>
+                                    <div class="card flex-md-row mb-4 box-shadow h-md-250" style="-webkit-box-shadow:0px 0px 30px 3px rgba(0,0,0,0.6);
+                                    -moz-box-shadow: 0px 0px 30px 3px rgba(0,0,0,0.6);
+                                    box-shadow: 0px 0px 30px 3px rgba(0,0,0,0.6);">
+                                        <div class="card-body d-flex flex-column align-items-start">
+                                    <p class="h3 text-success text-center py-3">Ocena: {{ ocena[0] }}, <br>Komentar: {{ ocena[1] }}<br> - Ocenio/la: {{ ocena[2] }} {{ ocena[3] }}</p></div></div></div>
+                                {% endfor %}
+                            {% else %}
+                                <li>Nema ocena za ovu salu</li>
+                            {% endif %}
+                        </ul>  
+
+            </div>
 {% endblock %}

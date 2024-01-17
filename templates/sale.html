@@ -25,7 +25,7 @@
   </style>
 </head>
 
-<body>
+
 <!-- Header -->
 <div class="container">
     <div class="row">
@@ -37,12 +37,15 @@
             <div class="d-flex justify-content-between">
               <div>
                 <div class="input-group rounded">
-                  <form method="post" action="{{ url_for('sale') }}">
-                      <input type="search" class="form-control rounded" name="pretraga" placeholder="Pretraži" aria-label="Search" aria-describedby="search-addon" />
-                      <span class="input-group-text border-0" id="search-addon">
-                          <button type="submit" style="background: none; border: none; cursor: pointer;"><i class="fas fa-search"></i></button>
-                      </span>
-                  </form>
+                  <form method="post" action="{{ url_for('sale') }}" class="input-group mb-3">
+                    <input type="search" class="form-control rounded" name="pretraga" placeholder="Pretraži" aria-label="Search" aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" id="search-addon">
+                        <button type="submit" style="background: none; border: none; cursor: pointer;">
+                            <i class="fas fa-search fa-xl"></i>
+                        </button>
+                    </span>
+                </form>
+                
               </div>
               
               </div>
@@ -61,7 +64,7 @@
 
 <div class="col">
     <div class="card">
-      <img src="{{ sala['putanja_slike'] }}" class="card-img-top" alt="...">
+      <img src="{{ sala['putanja_slike'] }}" class="card-img-top" style="height: 295px;width: auto; "alt="...">
       
       <div class="card-body">
             <h3 class="card-title text-center text-success">{{ sala['naziv_sale'] }}</h3>
@@ -77,7 +80,9 @@
                 <p class="px-5">{{ sala['grad'] }}</p>
             </i><br>
             <div class="text-center py-2">
-                <a href="{{ url_for('prikazivanje_sale', sala_id=sala['id_sale']) }}" class="btn btn-success text-center">Pogledaj još</a>
+                <a href="{{ url_for('prikazivanje_sale', sala_id=sala['id_sale']) }}" class="btn btn-success text-center" style="-webkit-box-shadow:0px 0px 30px 3px rgba(0,0,0,0.6);
+                -moz-box-shadow: 0px 0px 30px 3px rgba(0,0,0,0.6);
+                box-shadow: 0px 0px 30px 3px rgba(0,0,0,0.6);">Pogledaj još</a>
             </div>
         </div>
     </div>
