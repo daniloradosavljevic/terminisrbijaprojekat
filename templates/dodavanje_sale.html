@@ -20,7 +20,7 @@
 <div class="bg-image_dodavanje_sale d-flex justify-content-center align-items-center min-vh-100">
 
     <h2 class="word dodavanje_s3 container d-flex justify-content-center align-items-center min-vh-100">
-        <form action="{{ url_for('dodavanjesale') }}" method="post"
+        <form id="saleForm" action="{{ url_for('dodavanjesale') }}" method="post"
         enctype = "multipart/form-data">
                 <div class="msg">{{ msg }}</div>
                 <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox dodavanje_s1 form-control form-control-lg bg-light fs-6" />
@@ -44,5 +44,16 @@
     </h2>
 </div>
 
+    <script>
+    document.getElementById('saleForm').addEventListener('submit', function (event) {
+        var fileInput = document.querySelector('input[type="file"]');
+        if (fileInput.files.length === 0) {
+            alert('Morate uploadovati bar jednu sliku vaše sale.');
+            event.preventDefault(); 
+        }
+    });
+</script>
+
+</script>
 
 {% endblock %}
