@@ -7,7 +7,7 @@ import secrets
 import uuid, os
 from werkzeug.utils import secure_filename
 from mapa import generate_embed_code_from_address
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -35,7 +35,8 @@ mysql = MySQL(app)
 def home():
     ulogovan = False
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute(query = """
+    cursor.execute(
+        query="""
     SELECT bs.id_sale, bs.naziv_sale, bs.grad, MAX(ss.putanja) AS slika
     FROM (
         SELECT t.id_sale, COUNT(*) AS broj_termina
@@ -48,13 +49,14 @@ def home():
     LEFT JOIN slike_sala ss ON bs.id_sale = ss.id_sale
     GROUP BY bs.id_sale, bs.naziv_sale, bs.grad
     ORDER BY popularne_sale.broj_termina DESC;
-    """)
+    """
+    )
     popularne = cursor.fetchall()
     if "loggedin" in session and session["loggedin"]:
         ulogovan = True
-        return render_template("index.html", ulogovan=ulogovan,popularne=popularne)
+        return render_template("index.html", ulogovan=ulogovan, popularne=popularne)
     else:
-        return render_template("index.html", ulogovan=ulogovan,popularne=popularne)
+        return render_template("index.html", ulogovan=ulogovan, popularne=popularne)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -316,7 +318,7 @@ def zatrazi_termin(sala_id):
         mysql.connection.commit()
         msg = "Uspešno ste zatražili termin u ovoj sali!"
         return render_template("termin.html", sala=sala, msg=msg)
-    return render_template("termin.html",sala=sala)
+    return render_template("termin.html", sala=sala)
 
 
 @app.route("/moji_termini")
@@ -384,9 +386,9 @@ def moji_zahtevi():
 
     # Prolazi kroz svaki zahtev i postavi ts
     for zahtev in zahtevi_termina:
-        vreme_zahteva = zahtev['vreme']
+        vreme_zahteva = zahtev["vreme"]
         # Ako je trenutno vreme bar 1 dan ispred vremena iz zahteva, postavi ts na True, inače False
-        zahtev['ts'] = now_time - vreme_zahteva >= timedelta(days=1)
+        zahtev["ts"] = now_time - vreme_zahteva >= timedelta(days=1)
 
     return render_template("moji_zahtevi.html", zahtevi=zahtevi_termina)
 
@@ -652,6 +654,7 @@ def ocene_igraca(igrac_id):
 
     return render_template("ocene_igraca.html", ocene=ocene_igraca)
 
+
 @app.route("/moje_sale")
 def moje_sale():
     if "loggedin" not in session or not session["loggedin"] or session["tip"] == 2:
@@ -667,29 +670,35 @@ def moje_sale():
     return render_template("moje_sale.html", sale=sale)
 
 
-
 @app.route("/admin/dashboard")
 def admin_dashboard():
-    if "loggedin" not in session or not session["loggedin"] or session['tip'] != 0:
+    if "loggedin" not in session or not session["loggedin"] or session["tip"] != 0:
         return redirect(url_for("home"))
-    
+
     cur = mysql.connection.cursor()
+
     cur.execute("SELECT * FROM accounts")
     users = cur.fetchall()
 
     cur.execute("SELECT * FROM balon_sale")
     izlozene_sale = cur.fetchall()
 
+    cur.execute("SELECT * FROM ocene_sale")
+    comments = cur.fetchall()
+
     cur.close()
 
     return render_template(
-        "admin_dashboard.html", users=users, izlozene_sale=izlozene_sale
+        "admin_dashboard.html",
+        users=users,
+        izlozene_sale=izlozene_sale,
+        comments=comments,
     )
 
 
 @app.route("/admin/edit_user/<int:user_id>", methods=["GET", "POST"])
 def edit_user(user_id):
-    if "loggedin" not in session or not session["loggedin"] or session['tip'] != 0:
+    if "loggedin" not in session or not session["loggedin"] or session["tip"] != 0:
         return redirect(url_for("home"))
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM accounts WHERE id = %s", (user_id,))
@@ -698,7 +707,6 @@ def edit_user(user_id):
 
     if request.method == "POST":
         if "delete" in request.form:
-            # Add logic here to delete the user from the database
             cur = mysql.connection.cursor()
             cur.execute("DELETE FROM accounts WHERE id = %s", (user_id,))
             mysql.connection.commit()
@@ -706,7 +714,6 @@ def edit_user(user_id):
 
             return redirect(url_for("admin_dashboard"))
 
-        # Process form data for updating user
         username = request.form.get("username")
         email = request.form.get("email")
         ime = request.form.get("ime")
@@ -714,7 +721,6 @@ def edit_user(user_id):
         telefon = request.form.get("telefon")
         account_type = request.form.get("account_type")
 
-        # Add your logic here to update the user in the database
         cur = mysql.connection.cursor()
         cur.execute(
             "UPDATE accounts SET username=%s, email=%s, ime=%s, prezime=%s, telefon=%s, tip=%s WHERE id=%s",
@@ -730,7 +736,7 @@ def edit_user(user_id):
 
 @app.route("/admin/edit_sale/<int:sale_id>", methods=["GET", "POST"])
 def edit_sale(sale_id):
-    if "loggedin" not in session or not session["loggedin"] or session['tip'] != 0:
+    if "loggedin" not in session or not session["loggedin"] or session["tip"] != 0:
         return redirect(url_for("home"))
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sale_id,))
@@ -739,7 +745,6 @@ def edit_sale(sale_id):
 
     if request.method == "POST":
         if "delete" in request.form:
-            # Add logic here to delete the sale from the database
             cur = mysql.connection.cursor()
             cur.execute("DELETE FROM balon_sale WHERE id_sale = %s", (sale_id,))
             mysql.connection.commit()
@@ -747,14 +752,12 @@ def edit_sale(sale_id):
 
             return redirect(url_for("admin_dashboard"))
 
-        # Process form data for updating sale
         naziv_sale = request.form.get("naziv_sale")
         cena_po_satu = request.form.get("cena_po_satu")
         opis = request.form.get("opis")
         grad = request.form.get("grad")
         adresa = request.form.get("adresa")
 
-        # Add your logic here to update the sale in the database
         cur = mysql.connection.cursor()
         cur.execute(
             "UPDATE balon_sale SET naziv_sale=%s, cena_po_satu=%s, opis=%s, grad=%s, adresa=%s WHERE id_sale=%s",
@@ -766,6 +769,30 @@ def edit_sale(sale_id):
         return redirect(url_for("admin_dashboard"))
 
     return render_template("admin_edit_sale.html", sale=sale)
+
+
+@app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
+def delete_comment(comment_id):
+    # Connect to the database and create a cursor
+    cursor = mysql.connection.cursor()
+
+    # Fetch the comment information
+    cursor.execute(
+        "SELECT id_sale, id_igraca FROM ocene_sale WHERE id = %s", (comment_id,)
+    )
+    comment_info = cursor.fetchone()
+
+    if comment_info:
+        if request.method == "POST":
+            # Delete the comment from the database
+            cursor.execute("DELETE FROM ocene_sale WHERE id = %s", (comment_id,))
+            mysql.connection.commit()
+
+            # Redirect back to the admin dashboard
+            return redirect(url_for("admin_dashboard"))
+
+    # If the comment doesn't exist or the method is not POST, you may want to handle it appropriately (e.g., show an error page)
+    return render_template("error.html", message="Comment not found")
 
 
 if __name__ == "__main__":
