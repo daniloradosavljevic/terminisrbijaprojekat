@@ -7,7 +7,7 @@
             <h3 class="display-3 text-success text-center py-3">Zatražite termin u sali {{ sala['naziv_sale'] }}</h3>
             <h1 class="display-4 text-success text-center py-3">Cena termina iznosi <span class="badge rounded-pill bg-success">{{ sala['cena_po_satu'] }} RSD</span></h1>
             <div class="d-flex justify-content-center py-5">
-            <form action="" method="post">
+            <form action="" method="post" class="d-grid col-4 mx-auto">
                 <p class="h3 text-success text-center py-3">Odaberite datum i vreme</p>
                 <input type="datetime-local" name="vreme" id="vreme" step="3600" min="{{ current_time }}"><br><br>
                 <input type="submit" class="btn btn-success" value="Zatraži termin"></br>

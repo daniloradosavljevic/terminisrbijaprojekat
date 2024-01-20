@@ -1,22 +1,25 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h1>Moji termini</h1>
+<h1 class="text-center">Moji termini</h1>
 
 <div class="msg">{{ msg }}</div>
 
 
 {% for termin in termini %}
-    <h2>Termin {{ termin.id }}</h2>
-    <p>Ime sale: {{ termin['naziv_sale'] }}</p>
-    <p>Vreme: {{ termin.vreme }}</p>
-    {% if termin.status_termina == 'zatrazen' %}
-        <form action="{{ url_for('otkazi_termin', termin_id=termin.id) }}" method="post">
-            <input type="submit" class="btn" value="Otkazi termin" onclick="return confirm('Da li ste sigurni da želite da otkažete termin?')">
-        </form>
-    {% else %}
-        <p>Status termina: {{ termin.status_termina }}</p>
-    {% endif %}
+    <div class="border_leks container">
+        <br>
+        <h2 class="align-items-start">Termin {{ termin.id }}</h2>
+        <p>Ime sale: {{ termin['naziv_sale'] }}</p>
+        <p>Vreme: {{ termin.vreme }}</p>
+        {% if termin.status_termina == 'zatrazen' %}
+                <form action="{{ url_for('otkazi_termin', termin_id=termin.id) }}" method="post" class="d-grid d-md-flex justify-content-md-end">
+                    <input type="submit" class="btn_1 fs-6" value="Otkazi termin" onclick="return confirm('Da li ste sigurni da želite da otkažete termin?')">
+                </form>
+            {% else %}
+                <p>Status termina: {{ termin.status_termina }}</p>
+        {% endif %}
+    </div>
 {% endfor %}
 
 {% endblock %}

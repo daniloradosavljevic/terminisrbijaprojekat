@@ -5,11 +5,11 @@ body{
 }
 
 .btn_1{
-    background-color: rgb(65, 234, 65);
+    background-color: #198754;;
     color: white;
 }
 .btn_1:hover{
-    background-color: rgb(51, 185, 51);
+    background-color: #157247;
     color: whitesmoke;
 }
 
@@ -101,5 +101,16 @@ body{
     justify-content: center;
 }
 
+.border_leks {
+    border-left: 1px solid green;
+    border-right: 1px solid green;
+    border-top: 1px solid green;
+    border-bottom: 1px solid green;
+}
+
+.moj_profil_div {
+    padding: 50px 50px 50px 50px;
+    margin: 50px 50px 50px 50px;
+}
 
 
