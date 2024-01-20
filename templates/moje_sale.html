@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% block body %}
-<table border="1">
-    <p>Upravljajte vašim salama</p>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Naziv</th>
-            <th>Akcija</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for sala in sale %}
-        <tr>
-            <td>{{ sala['id_sale'] }}</td>
-            <td>{{ sala['naziv_sale'] }}</td>
-            <td>
-            <a href="{{ url_for('izmeni_salu', sala_id=sala['id_sale']) }}">Izmeni salu</a>
-            <a href="{{ url_for('obrisi_salu', sala_id=sala['id_sale']) }}" onclick="return confirm('Da li ste sigurni da želite da obrišete salu?')">Obriši salu</a>
-            </td>
-            {% endfor %}
-</table>
+<h2 class="text-center">Upravljajte vašim salama</h2>
+<br>
+<div class="container d-flex justify-content-center align-items-center col-md-6"  id="col1">
+    <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Naziv</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sala in sale %}
+                <tr>
+                    <td>{{ sala['id_sale'] }}</td>
+                    <td>{{ sala['naziv_sale'] }}</td>
+                    <td>
+                    <a href="{{ url_for('izmeni_salu', sala_id=sala['id_sale']) }}" class="btn_1 btn-lg fs-6">Izmeni salu</a>
+                    <a href="{{ url_for('obrisi_salu', sala_id=sala['id_sale']) }}" onclick="return confirm('Da li ste sigurni da želite da obrišete salu?')" class="btn_1 btn-lg fs-6">Obriši salu</a>
+                    </td>
+                {% endfor %}
+    </table>
+</div>
 {% endblock %}

@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block body %}
-    <h1>Izmeni salu</h1>
-    <form method="POST" action="/izmeni_salu/{{ sala.id_sale }}">
+    <h1 class="text-center">Izmeni salu</h1>
+    <form method="POST" action="/izmeni_salu/{{ sala.id_sale }}" class="d-grid col-md-6 mx-auto moj_profil_div mb-4" id="col1" style="padding: 0px 50px 0px 50px">
         <label for="novi_naziv">Novi naziv sale:</label>
-        <input type="text" id="novi_naziv" name="novi_naziv" value="{{ sala.naziv_sale }}" required><br><br>
+        <input type="text" id="novi_naziv" name="novi_naziv" value="{{ sala.naziv_sale }}" class="form-control form-control-lg bg-light fs-6" required><br>
 
         <label for="nova_cena">Nova cena po satu:</label>
-        <input type="number" id="nova_cena" name="nova_cena" value="{{ sala.cena_po_satu }}" required><br><br>
+        <input type="number" id="nova_cena" name="nova_cena" value="{{ sala.cena_po_satu }}" class="form-control form-control-lg bg-light fs-6" required><br>
 
         <label for="novi_opis">Novi opis:</label>
-        <input type="text" id="novi_opis" name="novi_opis" value="{{ sala.opis }}" required><br><br>
+        <input type="text" id="novi_opis" name="novi_opis" value="{{ sala.opis }}" class="textbox dodavanje_s2 form-control form-control-lg bg-light fs-6" required><br>
 
-        <input type="submit" value="Sačuvaj izmene">
+        <input type="submit" value="Sačuvaj izmene" class="btn_1 btn-lg fs-6">
     </form>
 {% endblock %}

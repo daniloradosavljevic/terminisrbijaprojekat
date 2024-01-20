@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block body %}
-    <h1>Ocene Igrača</h1>
-    <ul>
-        {% if ocene %}
-        {% for ocena in ocene %}
-            <li>Ocena: {{ ocena[0] }}, Komentar: {{ ocena[1] }}, Ocenio/la: {{ ocena[2] }} {{ ocena[3] }}</li>
-        {% endfor %}
-        {% else %}
-        <li>Nema ocena za ovog igrača</li>
-        {% endif %}
-    </ul>
+    <h1 class="text-center">Ocene Igrača</h1><br>
+    <div class="container d-flex justify-content-center align-items-center col-md-6">
+        <ul class="list-group list-group-numbered">
+            {% if ocene %}
+            {% for ocena in ocene %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">Ocena: {{ ocena[0] }}, Komentar: {{ ocena[1] }}, Ocenio/la: {{ ocena[2] }} {{ ocena[3] }}</li>
+            {% endfor %}
+            {% else %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">Nema ocena za ovog igrača</li>
+            {% endif %}
+        </ul>
+    </div>
 
 {% endblock %}

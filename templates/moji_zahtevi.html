@@ -1,39 +1,41 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Zahtevi za terminima u vašim salama</h1>
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Igrač</th>
-            <th>Status termina</th>
-            <th>Vreme</th>
-            <th>Sala</th>
-            <th>Ocene igrača</th>
-            <th>Akcija</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for zahtev in zahtevi %}
-        <tr>
-            <td>{{ zahtev['id'] }}</td>
-            <td>{{ zahtev['username'] }}</td>
-            <td>{{ zahtev['status_termina'] }}</td>
-            <td>{{ zahtev['vreme'] }}</td>
-            <td>{{ zahtev['naziv_sale'] }}</td>
-            <td><a href="{{ url_for('ocene_igraca', igrac_id=zahtev['id_igraca']) }}">Pogledaj</a></td>
-            <td>
-                {% if zahtev['status_termina'] == 'zatrazen' %}
-                    <a href="{{ url_for('odobri_zahtev', termin_id=zahtev['id']) }}">Odobri</a>
-                    <a href="{{ url_for('odbij_zahtev', termin_id=zahtev['id']) }}">Odbij</a>
-                
-                {% endif %}
-                {% if zahtev['status_termina'] == 'odobren' and zahtev['ts'] %}
-                <a href="{{ url_for('oceni', entity_id=zahtev['id_igraca']) }}">Oceni</a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<h1 class="text-center">Zahtevi za terminima u vašim salama</h1>
+<div class="container d-flex justify-content-center align-items-center col-md-6"  id="col1">
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Igrač</th>
+                <th>Status termina</th>
+                <th>Vreme</th>
+                <th>Sala</th>
+                <th>Ocene igrača</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for zahtev in zahtevi %}
+            <tr>
+                <td>{{ zahtev['id'] }}</td>
+                <td>{{ zahtev['username'] }}</td>
+                <td>{{ zahtev['status_termina'] }}</td>
+                <td>{{ zahtev['vreme'] }}</td>
+                <td>{{ zahtev['naziv_sale'] }}</td>
+                <td><a href="{{ url_for('ocene_igraca', igrac_id=zahtev['id_igraca']) }}" class="btn_1 btn-lg fs-6">Pogledaj</a></td>
+                <td>
+                    {% if zahtev['status_termina'] == 'zatrazen' %}
+                        <a href="{{ url_for('odobri_zahtev', termin_id=zahtev['id']) }}" class="btn_1 btn-lg fs-6">Odobri</a>
+                        <a href="{{ url_for('odbij_zahtev', termin_id=zahtev['id']) }}" class="btn_1 btn-lg fs-6">Odbij</a>
+                    
+                    {% endif %}
+                    {% if zahtev['status_termina'] == 'odobren' and zahtev['ts'] %}
+                    <a href="{{ url_for('oceni', entity_id=zahtev['id_igraca']) }}" class="btn_1 btn-lg fs-6">Oceni</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
