@@ -17,8 +17,8 @@
                     <td>{{ sala['id_sale'] }}</td>
                     <td>{{ sala['naziv_sale'] }}</td>
                     <td>
-                    <a href="{{ url_for('izmeni_salu', sala_id=sala['id_sale']) }}" class="btn_1 btn-lg fs-6">Izmeni salu</a>
-                    <a href="{{ url_for('obrisi_salu', sala_id=sala['id_sale']) }}" onclick="return confirm('Da li ste sigurni da želite da obrišete salu?')" class="btn_1 btn-lg fs-6">Obriši salu</a>
+                    <a href="{{ url_for('izmeni_salu', sala_id=sala['id_sale']) }}" class="btn_1 btn-sm fs-6" style="text-decoration:none">Izmeni salu</a>
+                    <a href="{{ url_for('obrisi_salu', sala_id=sala['id_sale']) }}" onclick="return confirm('Da li ste sigurni da želite da obrišete salu?')" class="btn_1 btn-sm fs-6" style="text-decoration:none">Obriši salu</a>
                     </td>
                 {% endfor %}
     </table>

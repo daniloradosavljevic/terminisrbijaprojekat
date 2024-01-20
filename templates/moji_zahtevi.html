@@ -22,15 +22,15 @@
                 <td>{{ zahtev['status_termina'] }}</td>
                 <td>{{ zahtev['vreme'] }}</td>
                 <td>{{ zahtev['naziv_sale'] }}</td>
-                <td><a href="{{ url_for('ocene_igraca', igrac_id=zahtev['id_igraca']) }}" class="btn_1 btn-lg fs-6">Pogledaj</a></td>
+                <td><a href="{{ url_for('ocene_igraca', igrac_id=zahtev['id_igraca']) }}" class="btn_1 btn-lg fs-6" style="text-decoration:none">Pogledaj</a></td>
                 <td>
                     {% if zahtev['status_termina'] == 'zatrazen' %}
-                        <a href="{{ url_for('odobri_zahtev', termin_id=zahtev['id']) }}" class="btn_1 btn-lg fs-6">Odobri</a>
-                        <a href="{{ url_for('odbij_zahtev', termin_id=zahtev['id']) }}" class="btn_1 btn-lg fs-6">Odbij</a>
+                        <a href="{{ url_for('odobri_zahtev', termin_id=zahtev['id']) }}" class="btn_1 btn-lg fs-6" style="text-decoration:none">Odobri</a>
+                        <a href="{{ url_for('odbij_zahtev', termin_id=zahtev['id']) }}" class="btn_1 btn-lg fs-6" style="text-decoration:none">Odbij</a>
                     
                     {% endif %}
                     {% if zahtev['status_termina'] == 'odobren' and zahtev['ts'] %}
-                    <a href="{{ url_for('oceni', entity_id=zahtev['id_igraca']) }}" class="btn_1 btn-lg fs-6">Oceni</a>
+                    <a href="{{ url_for('oceni', entity_id=zahtev['id_igraca']) }}" class="btn_1 btn-lg fs-6" style="text-decoration:none">Oceni</a>
                     {% endif %}
                 </td>
             </tr>

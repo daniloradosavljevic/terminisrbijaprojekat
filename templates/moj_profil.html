@@ -5,15 +5,15 @@
 
     <div class="d-grid gap-5 col-3 mx-auto moj_profil_div" id="col1">
         {% if uloga == 'Vlasnik sale' %}
-            <a href="{{ url_for('moji_zahtevi') }}" class="btn_1 btn-lg  fs-6">Moji termini</a>
-            <a href="{{ url_for('moje_sale') }}" class="btn_1 btn-lg  fs-6">Moje sale</a>
+            <a href="{{ url_for('moji_zahtevi') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Moji termini</a>
+            <a href="{{ url_for('moje_sale') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Moje sale</a>
         {% elif uloga == 'Igrač' %}
-        <a href="{{ url_for('moji_termini') }}" class="btn_1 btn-lg  fs-6">Moji termini</a>
+        <a href="{{ url_for('moji_termini') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Moji termini</a>
 
         {% endif %}
-        <a href="{{ url_for('izmeni_profil') }}" class="btn_1 btn-lg  fs-6">Izmeni profil</a>
+        <a href="{{ url_for('izmeni_profil') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Izmeni profil</a>
         <a href="{{ url_for('deaktiviraj_profil') }}" 
-        onclick="return confirm('Da li ste sigurni da želite da deaktivirate profil?')" class="btn_1 btn-lg fs-6">Deaktiviraj profil</a>
+        onclick="return confirm('Da li ste sigurni da želite da deaktivirate profil?')" class="btn_1 btn-lg fs-6" style="text-decoration:none">Deaktiviraj profil</a>
     </div>
 
 {% endblock %}
