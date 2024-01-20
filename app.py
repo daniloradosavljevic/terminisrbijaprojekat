@@ -302,7 +302,7 @@ def zatrazi_termin(sala_id):
         vreme = request.form["vreme"]
         cursor.execute(
             "SELECT * FROM termini WHERE id_sale = %s AND vreme = %s AND status_termina = %s",
-            (sala_id, vreme, "potvrdjen"),
+            (sala_id, vreme, "odobren"),
         )
         existing_termin = cursor.fetchone()
         if existing_termin:
@@ -599,7 +599,7 @@ def oceni(entity_id):
 
         elif session["tip"] != 2:  # Vlasnik sale ocenjuje igrača
             cursor.execute(
-                'SELECT * FROM termini t INNER JOIN balon_sale bs ON t.id_sale = bs.id_sale WHERE bs.id_vlasnika = %s AND t.id_igraca = %s AND t.status_termina = "potvrdjen"',
+                'SELECT * FROM termini t INNER JOIN balon_sale bs ON t.id_sale = bs.id_sale WHERE bs.id_vlasnika = %s AND t.id_igraca = %s AND t.status_termina = "odobren"',
                 (session["id"], entity_id),
             )
             termini = cursor.fetchall()
