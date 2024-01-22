@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from flask_bcrypt import Bcrypt
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
@@ -30,6 +31,8 @@ ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "gif"}
 mail = Mail(app)
 mysql = MySQL(app)
 
+bcrypt = Bcrypt(app)
+
 
 @app.route("/")
 def home():
@@ -59,25 +62,29 @@ def home():
         return render_template("index.html", ulogovan=ulogovan, popularne=popularne)
 
 
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt(app)
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if "loggedin" in session and session["loggedin"]:
         return redirect(url_for("home"))
+
     msg = ""
-    if (
-        request.method == "POST"
-        and "username" in request.form
-        and "password" in request.form
-    ):
+
+    if request.method == "POST" and "username" in request.form and "password" in request.form:
         username = request.form["username"]
         password = request.form["password"]
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
-            "SELECT * FROM accounts WHERE username = % s AND password = % s",
-            (username, password),
+            "SELECT * FROM accounts WHERE username = %s", (username,)
         )
+
         account = cursor.fetchone()
-        if account:
+
+        if account and bcrypt.check_password_hash(account["password"], password):
             session["loggedin"] = True
             session["id"] = account["id"]
             session["username"] = account["username"]
@@ -86,7 +93,10 @@ def login():
             return redirect(url_for("home"))
         else:
             msg = "Incorrect username/password"
+
     return render_template("login.html", msg=msg)
+
+
 
 
 @app.route("/logout")
@@ -115,6 +125,7 @@ def register():
     ):
         username = request.form["username"]
         password = request.form["password"]
+        password_hashed = bcrypt.generate_password_hash(password).decode("utf-8")
         email = request.form["email"]
         ime = request.form["ime"]
         prezime = request.form["prezime"]
@@ -144,7 +155,7 @@ def register():
                 "INSERT INTO accounts VALUES (NULL, % s, % s, % s, % s, % s, % s , % s)",
                 (
                     username,
-                    password,
+                    password_hashed,
                     email,
                     ime,
                     prezime,
@@ -449,12 +460,18 @@ def profil():
     return render_template("moj_profil.html", korisnik=korisnik, uloga=uloga)
 
 
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt(app)
+
 @app.route("/izmeni_profil", methods=["GET", "POST"])
 def izmeni_profil():
     if "loggedin" not in session or not session["loggedin"]:
         return redirect(url_for("home"))
+
     msg = ""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
     if request.method == "POST":
         ime = request.form["ime"]
         prezime = request.form["prezime"]
@@ -479,10 +496,11 @@ def izmeni_profil():
                 if nova_sifra != potvrda_sifre:
                     msg = "Nova šifra i potvrda šifre se ne podudaraju!"
                 else:
-                    if nova_sifra:  # Proveravamo da li je korisnik uneo novu šifru
+                    if nova_sifra:  
+                        hashed_password = bcrypt.generate_password_hash(nova_sifra).decode("utf-8")
                         cursor.execute(
                             "UPDATE accounts SET ime = %s, prezime = %s, telefon = %s, email = %s, password = %s WHERE id = %s",
-                            (ime, prezime, telefon, email, nova_sifra, session["id"]),
+                            (ime, prezime, telefon, email, hashed_password, session["id"]),
                         )
                     else:
                         cursor.execute(
