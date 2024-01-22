@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block body %}
     <h1 class="text-center">Zdravo {{ korisnik['ime'] }}</h1>
+    {% if session['tip'] == 0 %}
     <p class="text-center">({{ uloga }})</p>
-
+    {% else %}
+    <p class="text-center">({{ uloga }})</p>
+    {% endif %}
     <div class="d-grid gap-5 col-3 mx-auto moj_profil_div" id="col1">
+        
         {% if uloga == 'Vlasnik sale' %}
             <a href="{{ url_for('moji_zahtevi') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Moji termini</a>
             <a href="{{ url_for('moje_sale') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Moje sale</a>
-        {% elif uloga == 'Igrač' %}
+        {% elif uloga == 'Igrač' and session['tip'] != 0 %}
         <a href="{{ url_for('moji_termini') }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Moji termini</a>
 
         {% endif %}
