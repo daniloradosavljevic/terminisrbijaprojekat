@@ -2,7 +2,7 @@
 {% block body %}
     <h1 class="text-center">Zdravo {{ korisnik['ime'] }}</h1>
     {% if session['tip'] == 0 %}
-    <p class="text-center">({{ uloga }})</p>
+    <p class="text-center">(Admin)</p>
     {% else %}
     <p class="text-center">({{ uloga }})</p>
     {% endif %}
