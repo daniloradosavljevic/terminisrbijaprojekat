@@ -3,7 +3,9 @@
 
 <h1 class="text-center">Moji termini</h1>
 
-<div class="msg">{{ msg }}</div>
+{% if msg %}
+<p class="alert alert-primary d-flex align-items-center" role="alert">{{ msg }}</p>
+{% endif %}
 
 
 {% for termin in termini %}

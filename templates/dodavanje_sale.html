@@ -22,7 +22,9 @@
     <h2 class="word dodavanje_s3 container d-flex justify-content-center align-items-center min-vh-100">
         <form id="saleForm" action="{{ url_for('dodavanjesale') }}" method="post"
         enctype = "multipart/form-data">
-                <div class="msg">{{ msg }}</div>
+                {% if msg %}
+                <p class="alert alert-primary d-flex align-items-center" role="alert">{{ msg }}</p>
+                {% endif %}
                 <input id="naziv_sale" name="naziv_sale" type="text" placeholder="Unesite naziv sale" class="textbox dodavanje_s1 form-control form-control-lg bg-light fs-6" />
                 <br>
                 <input id="cena_po_satu" name="cena_po_satu" type="text" placeholder="Unesite cenu po satu" class="textbox dodavanje_s1 form-control form-control-lg bg-light fs-6" />
@@ -55,5 +57,6 @@
 </script>
 
 </script>
+
 
 {% endblock %}

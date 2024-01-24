@@ -113,4 +113,8 @@ body{
     margin: 50px 50px 50px 50px;
 }
 
+.alert.alert-warning {
+    display: none;
+}
+
 

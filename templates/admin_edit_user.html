@@ -1,40 +1,40 @@
 {% extends 'base.html' %}
 {% block body %}
-    <h1>Edit User</h1>
+    <h1 class="text-center">Izmeni Korisnika</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="" class="d-grid col-md-6 mx-auto moj_profil_div mb-4" id="col1" style="padding: 0px 50px 0px 50px">
         <!-- Include form fields for editing user information -->
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="{{ user[1] }}" required>
+        <input type="text" id="username" name="username" value="{{ user[1] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ user[3] }}" required>
+        <input type="email" id="email" name="email" value="{{ user[3] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="ime">Ime:</label>
-        <input type="text" id="ime" name="ime" value="{{ user[4] }}" required>
+        <input type="text" id="ime" name="ime" value="{{ user[4] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="prezime">Prezime:</label>
-        <input type="text" id="prezime" name="prezime" value="{{ user[5] }}" required>
+        <input type="text" id="prezime" name="prezime" value="{{ user[5] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="telefon">Telefon:</label>
-        <input type="text" id="telefon" name="telefon" value="{{ user[6] }}" required>
+        <input type="text" id="telefon" name="telefon" value="{{ user[6] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
-        <label for="account_type">Account Type:</label>
-        <select id="account_type" name="account_type" required>
+        <label for="account_type">Tip korisnika:</label>
+        <select id="account_type" name="account_type" class="form-control form-control-lg bg-light fs-6" required>
             <option value="0" {% if user[7] == 0 %}selected{% endif %}>Admin</option>
-            <option value="1" {% if user[7] == 1 %}selected{% endif %}>Korisnik</option>
-            <option value="2" {% if user[7] == 2 %}selected{% endif %}>Izdavac</option>
+            <option value="1" {% if user[7] == 1 %}selected{% endif %}>Igrač</option>
+            <option value="2" {% if user[7] == 2 %}selected{% endif %}>Vlasnik Sale</option>
         </select>
         <br>
 
-        <button type="submit">Save Changes</button>
-        <button type="submit" name="delete">Delete User</button>
+        <button type="submit" class="btn_1 btn-lg fs-6">Sačuvaj Izmene</button><br>
+        <button type="submit" name="delete" class="btn_1 btn-lg fs-6">Obriši korisnika</button>
     </form>
 
-    <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn-secondary btn-lg  fs-6" style="text-decoration:none">Nazad na dashboard</a>
 {% endblock %}

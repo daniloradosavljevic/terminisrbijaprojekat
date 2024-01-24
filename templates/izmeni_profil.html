@@ -2,7 +2,7 @@
 {% block body %}
 <h1 class="text-center">Izmeni profil</h1>
 {% if msg %}
-<p>{{ msg }}</p>
+<p class="alert alert-primary d-flex align-items-center" role="alert">{{ msg }}</p>
 {% endif %}
     <div class="d-grid col-md-6 mx-auto moj_profil_div mb-4" id="col1">
         <form method="POST" action="/izmeni_profil">

@@ -1,32 +1,32 @@
 {% extends 'base.html' %}
 {% block body %}
-    <h1>Edit Sale</h1>
+    <h1 class="text-center">Izmeni Salu</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="" class="d-grid col-md-6 mx-auto moj_profil_div mb-4" id="col1" style="padding: 0px 50px 0px 50px">
         <!-- Include form fields for editing sale information -->
         <label for="naziv_sale">Naziv Sale:</label>
-        <input type="text" id="naziv_sale" name="naziv_sale" value="{{ sale[2] }}" required>
+        <input type="text" id="naziv_sale" name="naziv_sale" value="{{ sale[2] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="cena_po_satu">Cena po satu:</label>
-        <input type="text" id="cena_po_satu" name="cena_po_satu" value="{{ sale[3] }}" required>
+        <input type="text" id="cena_po_satu" name="cena_po_satu" value="{{ sale[3] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="opis">Opis:</label>
-        <textarea id="opis" name="opis" rows="4" cols="50">{{ sale[4] }}</textarea>
+        <textarea id="opis" name="opis" rows="4" cols="50" class="form-control form-control-lg bg-light fs-6">{{ sale[4] }}</textarea>
         <br>
 
         <label for="grad">Grad:</label>
-        <input type="text" id="grad" name="grad" value="{{ sale[5] }}" required>
+        <input type="text" id="grad" name="grad" value="{{ sale[5] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
         <label for="adresa">Adresa:</label>
-        <input type="text" id="adresa" name="adresa" value="{{ sale[6] }}" required>
+        <input type="text" id="adresa" name="adresa" value="{{ sale[6] }}" class="form-control form-control-lg bg-light fs-6" required>
         <br>
 
-        <button type="submit">Save Changes</button>
-        <button type="submit" name="delete">Delete Sale</button>
+        <button type="submit" class="btn_1 btn-lg fs-6">Sačuvaj Izmene</button><br>
+        <button type="submit" name="delete" class="btn_1 btn-lg fs-6">Obriši Salu</button>
     </form>
 
-    <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn-secondary btn-lg  fs-6" style="text-decoration:none">Nazad na dashboard</a>
 {% endblock %}

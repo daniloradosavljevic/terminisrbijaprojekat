@@ -31,7 +31,9 @@
                         <h2>Registracija</h2>
                     </div>
                     <form action="{{ url_for('register') }}" method="post">
-                        <div class="msg">{{ msg }}</div>
+                        {% if msg %}
+                        <p class="alert alert-primary d-flex align-items-center" role="alert">{{ msg }}</p>
+                        {% endif %}
                         {% if reg %}
                         <a class="bottom" href="{{url_for('login')}}">Uloguj se</a></p>
                         {% else %}

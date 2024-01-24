@@ -2,7 +2,6 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
 
-# Zamijenite ovo sa stvarnim šiframa iz vaše baze podataka
 plain_text_passwords = ["danilo","korisnik123","korisnik2","veljko123","aki123"]
 
 hashed_passwords = []
