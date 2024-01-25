@@ -54,93 +54,95 @@
                 {% block body %}
                 <h1>Admin Dashboard</h1>
                 <div id="korisnici" class="contentDiv">
-                <h2>Korisnici</h2>
-                <table class="table table-hover table-responsive">
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Ime</th>
-                        <th>Prezime</th>
-                        <th>Telefon</th>
-                        <th>Tip Korisnika</th>
-                        <th>Action</th>
-                    </tr>
-                    {% for user in users %}
-                    <tr>
-                        <td>{{ user[0] }}</td>
-                        <td>{{ user[1] }}</td>
-                        <td>{{ user[3] }}</td>
-                        <td>{{ user[4] }}</td>
-                        <td>{{ user[5] }}</td>
-                        <td>{{ user[6] }}</td>
+                    <h2>Korisnici</h2>
+                    <table class="table table-hover table-responsive">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th>Telefon</th>
+                            <th>Tip Korisnika</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user[0] }}</td>
+                            <td>{{ user[1] }}</td>
+                            <td>{{ user[3] }}</td>
+                            <td>{{ user[4] }}</td>
+                            <td>{{ user[5] }}</td>
+                            <td>{{ user[6] }}</td>
 
-                        <td>
-                            {% if user[7] == 0 %} Admin {% elif user[7] == 1 %} Igrac {% elif user[7] == 2 %} Vlasnik sale {% else %} Unknown {% endif %}
-                        </td>
+                            <td>
+                                {% if user[7] == 0 %} Admin {% elif user[7] == 1 %} Igrac {% elif user[7] == 2 %} Vlasnik sale {% else %} Unknown {% endif %}
+                            </td>
 
-                        <td>
-                            <a href="{{ url_for('edit_user', user_id=user[0]) }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Edit</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div id="sale" class="contentDiv" style="display: none;">
-                <h2>Balon sale</h2>
-                <table class="table table-hover table-responsive">
-                    <tr>
-                        <th>ID Sale</th>
-                        <th>ID Vlasnika</th>
-                        <th>Naziv Sale</th>
-                        <th>Cena</th>
-                        <th>Opis</th>
-                        <th>Grad</th>
-                        <th>Adresa</th>
-                        <th>Action</th>
-                    </tr>
-                    {% for sala in izlozene_sale %}
-                    <tr>
-                        <td>{{ sala[0] }}</td>
-                        <td>{{ sala[1] }}</td>
-                        <td>{{ sala[2] }}</td>
-                        <td>{{ sala[3] }}</td>
-                        <td>{{ sala[4] }}</td>
-                        <td>{{ sala[5] }}</td>
-                        <td>{{ sala[6] }}</td>
-                        <td>
-                            <a href="{{ url_for('edit_sale', sale_id=sala[0]) }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Edit</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <div id="ocene" class="contentDiv" style="display: none;">
-                <h2>Ocene i Komentari</h2>
-                <table class="table table-hover table-responsive">
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Sale</th>
-                        <th>Ocena</th>
-                        <th>Komentar</th>
-                        <th>ID Igraca</th>
-                        <th>Action</th>
-                    </tr>
-                    {% for ocena in comments %}
-                    <tr>
-                        <td>{{ ocena[0] }}</td>
-                        <td>{{ ocena[1] }}</td>
-                        <td>{{ ocena[2] }}</td>
-                        <td>{{ ocena[3] }}</td>
-                        <td>{{ ocena[4] }}</td>
-                        <td>
-
-                            <a href="{{ url_for('delete_comment', comment_id=ocena[0]) }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
+                            <td>
+                                <a href="{{ url_for('edit_user', user_id=user[0]) }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div id="sale" class="contentDiv" style="display: none;">
+                    <h2>Balon sale</h2>
+                    <table class="table table-hover table-responsive">
+                        <tr>
+                            <th>ID Sale</th>
+                            <th>ID Vlasnika</th>
+                            <th>Naziv Sale</th>
+                            <th>Cena</th>
+                            <th>Opis</th>
+                            <th>Grad</th>
+                            <th>Adresa</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for sala in izlozene_sale %}
+                        <tr>
+                            <td>{{ sala[0] }}</td>
+                            <td>{{ sala[1] }}</td>
+                            <td>{{ sala[2] }}</td>
+                            <td>{{ sala[3] }}</td>
+                            <td>{{ sala[4] }}</td>
+                            <td>{{ sala[5] }}</td>
+                            <td>{{ sala[6] }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_sale', sale_id=sala[0]) }}" class="btn_1 btn-lg  fs-6" style="text-decoration:none">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div id="ocene" class="contentDiv" style="display: none;">
+                    <h2>Ocene i Komentari</h2>
+                    <table class="table table-hover table-responsive">
+                        <tr>
+                            <th>ID</th>
+                            <th>ID Sale</th>
+                            <th>Ocena</th>
+                            <th>Komentar</th>
+                            <th>ID Igraca</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for ocena in comments %}
+                        <tr>
+                            <td>{{ ocena[0] }}</td>
+                            <td>{{ ocena[1] }}</td>
+                            <td>{{ ocena[2] }}</td>
+                            <td>{{ ocena[3] }}</td>
+                            <td>{{ ocena[4] }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('delete_comment', comment_id=ocena[0]) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn_1 btn-lg fs-6" style="text-decoration:none">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
                 {% endblock %}
 
             </div>

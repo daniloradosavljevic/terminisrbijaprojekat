@@ -62,9 +62,8 @@ def home():
         return render_template("index.html", ulogovan=ulogovan, popularne=popularne)
 
 
-from flask_bcrypt import Bcrypt
-
 bcrypt = Bcrypt(app)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -73,14 +72,16 @@ def login():
 
     msg = ""
 
-    if request.method == "POST" and "username" in request.form and "password" in request.form:
+    if (
+        request.method == "POST"
+        and "username" in request.form
+        and "password" in request.form
+    ):
         username = request.form["username"]
         password = request.form["password"]
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(
-            "SELECT * FROM accounts WHERE username = %s", (username,)
-        )
+        cursor.execute("SELECT * FROM accounts WHERE username = %s", (username,))
 
         account = cursor.fetchone()
 
@@ -95,8 +96,6 @@ def login():
             msg = "Incorrect username/password"
 
     return render_template("login.html", msg=msg)
-
-
 
 
 @app.route("/logout")
@@ -221,9 +220,7 @@ def dodavanjesale():
             mysql.connection.commit()
             msg = "Uspešno ste dodali salu!"
 
-            fajlovi = request.files.getlist(
-                "file"
-            )  # Ispravljeno pozivanje metode getlist()
+            fajlovi = request.files.getlist("file")
             if fajlovi:
                 for index, fajl in enumerate(fajlovi):
                     if fajl and allowed_file(fajl.filename) and file_size_allowed(fajl):
@@ -460,10 +457,6 @@ def profil():
     return render_template("moj_profil.html", korisnik=korisnik, uloga=uloga)
 
 
-from flask_bcrypt import Bcrypt
-
-bcrypt = Bcrypt(app)
-
 @app.route("/izmeni_profil", methods=["GET", "POST"])
 def izmeni_profil():
     if "loggedin" not in session or not session["loggedin"]:
@@ -496,11 +489,20 @@ def izmeni_profil():
                 if nova_sifra != potvrda_sifre:
                     msg = "Nova šifra i potvrda šifre se ne podudaraju!"
                 else:
-                    if nova_sifra:  
-                        hashed_password = bcrypt.generate_password_hash(nova_sifra).decode("utf-8")
+                    if nova_sifra:
+                        hashed_password = bcrypt.generate_password_hash(
+                            nova_sifra
+                        ).decode("utf-8")
                         cursor.execute(
                             "UPDATE accounts SET ime = %s, prezime = %s, telefon = %s, email = %s, password = %s WHERE id = %s",
-                            (ime, prezime, telefon, email, hashed_password, session["id"]),
+                            (
+                                ime,
+                                prezime,
+                                telefon,
+                                email,
+                                hashed_password,
+                                session["id"],
+                            ),
                         )
                     else:
                         cursor.execute(
@@ -524,18 +526,30 @@ def deaktiviraj_profil():
         return redirect(url_for("home"))
 
     cursor = mysql.connection.cursor()
-    # Dobavi ID korisnika koji je trenutno prijavljen
     user_id = session["id"]
 
-    # Obriši korisnika iz tabele
+    cursor.execute("SELECT id_sale FROM balon_sale WHERE id_vlasnika = %s", (user_id,))
+    balon_sale_ids = [result[0] for result in cursor.fetchall()]
+
+    cursor.execute("SELECT id FROM termini WHERE id_igraca = %s", (user_id,))
+    termini_ids = [result[0] for result in cursor.fetchall()]
+
+    for balon_sale_id in balon_sale_ids:
+        cursor.execute("DELETE FROM ocene_sale WHERE id_sale = %s", (balon_sale_id,))
+        cursor.execute("DELETE FROM balon_sale WHERE id_sale = %s", (balon_sale_id,))
+        cursor.execute("DELETE FROM termini WHERE id_sale = %s", (balon_sale_id,))
+        mysql.connection.commit()
+
+    for termin_id in termini_ids:
+        cursor.execute("DELETE FROM termini WHERE id = %s", (termin_id,))
+        mysql.connection.commit()
+
     cursor.execute("DELETE FROM accounts WHERE id = %s", (user_id,))
     mysql.connection.commit()
 
-    # Odjavi korisnika
     session.pop("loggedin", None)
     session.pop("id", None)
 
-    # Redirekcija na stranicu oproštaja
     return render_template("stranica_oprostaja.html")
 
 
@@ -547,7 +561,6 @@ def izmeni_salu(sala_id):
     msg = ""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-    # Dohvatanje podataka o sali za prikaz u formi za izmenu
     cursor.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sala_id,))
     sala = cursor.fetchone()
 
@@ -581,8 +594,13 @@ def obrisi_salu(sala_id):
     cursor.execute("SELECT id_vlasnika FROM balon_sale WHERE id_sale = %s", (sala_id,))
     result = cursor.fetchone()
 
-    # Provera da li je korisnik vlasnik te sale
     if result and result[0] == session["id"]:
+        cursor.execute("DELETE FROM ocene_sale WHERE id_sale = %s", (sala_id,))
+        mysql.connection.commit()
+
+        cursor.execute("DELETE FROM termini WHERE id_sale = %s", (sala_id,))
+        mysql.connection.commit()
+
         cursor.execute("DELETE FROM balon_sale WHERE id_sale = %s", (sala_id,))
         mysql.connection.commit()
 
@@ -654,7 +672,7 @@ def oceni(entity_id):
 def ocene_sala(sala_id):
     cursor = mysql.connection.cursor()
     cursor.execute(
-        "SELECT os.ocena, os.komentar, a.ime, a.prezime FROM ocene_sale os JOIN accounts a ON os.id_igraca = a.id WHERE os.id_sale = %s",
+        "SELECT os.ocena, os.komentar, IFNULL(a.ime, 'Nedostupno') as ime, IFNULL(a.prezime, '') as prezime FROM ocene_sale os LEFT JOIN accounts a ON os.id_igraca = a.id WHERE os.id_sale = %s",
         (sala_id,),
     )
     ocene_sala = cursor.fetchall()
@@ -665,7 +683,7 @@ def ocene_sala(sala_id):
 def ocene_igraca(igrac_id):
     cursor = mysql.connection.cursor()
     cursor.execute(
-        "SELECT oi.ocena, oi.komentar, a.ime, a.prezime FROM ocene_igraca oi JOIN accounts a ON oi.id_igraca = a.id WHERE oi.id_igraca = %s",
+        "SELECT oi.ocena, oi.komentar, IFNULL(a.ime, 'Nedostupno') as ime, IFNULL(a.prezime, '') as prezime FROM ocene_igraca oi LEFT JOIN accounts a ON oi.id_igraca = a.id WHERE oi.id_igraca = %s",
         (igrac_id,),
     )
     ocene_igraca = cursor.fetchall()
@@ -718,14 +736,31 @@ def admin_dashboard():
 def edit_user(user_id):
     if "loggedin" not in session or not session["loggedin"] or session["tip"] != 0:
         return redirect(url_for("home"))
+
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM accounts WHERE id = %s", (user_id,))
-    user = cur.fetchone()
-    cur.close()
 
     if request.method == "POST":
         if "delete" in request.form:
-            cur = mysql.connection.cursor()
+            cur.execute(
+                "SELECT id_sale FROM balon_sale WHERE id_vlasnika = %s", (user_id,)
+            )
+            balon_sale_ids = [result[0] for result in cur.fetchall()]
+
+            for balon_sale_id in balon_sale_ids:
+                cur.execute(
+                    "DELETE FROM ocene_sale WHERE id_sale = %s", (balon_sale_id,)
+                )
+                mysql.connection.commit()
+
+            for balon_sale_id in balon_sale_ids:
+                cur.execute("DELETE FROM termini WHERE id_sale = %s", (balon_sale_id,))
+                mysql.connection.commit()
+
+            cur.execute(
+                "DELETE FROM termini WHERE id_igraca = %s",
+                (user_id,),
+            )
+
             cur.execute("DELETE FROM accounts WHERE id = %s", (user_id,))
             mysql.connection.commit()
             cur.close()
@@ -739,7 +774,6 @@ def edit_user(user_id):
         telefon = request.form.get("telefon")
         account_type = request.form.get("account_type")
 
-        cur = mysql.connection.cursor()
         cur.execute(
             "UPDATE accounts SET username=%s, email=%s, ime=%s, prezime=%s, telefon=%s, tip=%s WHERE id=%s",
             (username, email, ime, prezime, telefon, account_type, user_id),
@@ -749,6 +783,10 @@ def edit_user(user_id):
 
         return redirect(url_for("admin_dashboard"))
 
+    cur.execute("SELECT * FROM accounts WHERE id = %s", (user_id,))
+    user = cur.fetchone()
+    cur.close()
+
     return render_template("admin_edit_user.html", user=user)
 
 
@@ -756,14 +794,17 @@ def edit_user(user_id):
 def edit_sale(sale_id):
     if "loggedin" not in session or not session["loggedin"] or session["tip"] != 0:
         return redirect(url_for("home"))
+
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sale_id,))
-    sale = cur.fetchone()
-    cur.close()
 
     if request.method == "POST":
         if "delete" in request.form:
-            cur = mysql.connection.cursor()
+            cur.execute("DELETE FROM ocene_sale WHERE id_sale = %s", (sale_id,))
+            mysql.connection.commit()
+
+            cur.execute("DELETE FROM termini WHERE id_sale = %s", (sale_id,))
+            mysql.connection.commit()
+
             cur.execute("DELETE FROM balon_sale WHERE id_sale = %s", (sale_id,))
             mysql.connection.commit()
             cur.close()
@@ -776,7 +817,6 @@ def edit_sale(sale_id):
         grad = request.form.get("grad")
         adresa = request.form.get("adresa")
 
-        cur = mysql.connection.cursor()
         cur.execute(
             "UPDATE balon_sale SET naziv_sale=%s, cena_po_satu=%s, opis=%s, grad=%s, adresa=%s WHERE id_sale=%s",
             (naziv_sale, cena_po_satu, opis, grad, adresa, sale_id),
@@ -786,31 +826,38 @@ def edit_sale(sale_id):
 
         return redirect(url_for("admin_dashboard"))
 
+    cur.execute("SELECT * FROM balon_sale WHERE id_sale = %s", (sale_id,))
+    sale = cur.fetchone()
+    cur.close()
+
     return render_template("admin_edit_sale.html", sale=sale)
 
 
 @app.route("/delete_comment/<int:comment_id>", methods=["GET", "POST"])
 def delete_comment(comment_id):
-    # Connect to the database and create a cursor
-    cursor = mysql.connection.cursor()
+    if request.method == "POST" or request.form.get("_method") == "DELETE":
+        cursor = mysql.connection.cursor()
 
-    # Fetch the comment information
-    cursor.execute(
-        "SELECT id_sale, id_igraca FROM ocene_sale WHERE id = %s", (comment_id,)
-    )
-    comment_info = cursor.fetchone()
+        cursor.execute(
+            "SELECT id_sale, id_igraca FROM ocene_sale WHERE id = %s", (comment_id,)
+        )
+        comment_info = cursor.fetchone()
 
-    if comment_info:
-        if request.method == "POST":
-            # Delete the comment from the database
+        if comment_info:
+            id_sale, id_igraca = comment_info
+
             cursor.execute("DELETE FROM ocene_sale WHERE id = %s", (comment_id,))
             mysql.connection.commit()
 
-            # Redirect back to the admin dashboard
+            cursor.execute(
+                "DELETE FROM ocene_igraca WHERE id_igraca = %s",
+                (id_igraca,),
+            )
+            mysql.connection.commit()
+
             return redirect(url_for("admin_dashboard"))
 
-    # If the comment doesn't exist or the method is not POST, you may want to handle it appropriately (e.g., show an error page)
-    return render_template("error.html", message="Comment not found")
+    return redirect(url_for("admin_dashboard"))
 
 
 if __name__ == "__main__":
