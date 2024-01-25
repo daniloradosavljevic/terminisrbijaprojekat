@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `accounts`
 --
 
+-- Table structure for table `accounts`
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -40,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
+
 
 --
 -- Dumping data for table `accounts`
@@ -58,8 +60,6 @@ INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `ime`, `prezime`,
 
 --
 -- Table structure for table `balon_sale`
---
-
 DROP TABLE IF EXISTS `balon_sale`;
 CREATE TABLE IF NOT EXISTS `balon_sale` (
   `id_sale` int NOT NULL AUTO_INCREMENT,
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `balon_sale` (
   `grad` varchar(50) NOT NULL,
   `adresa` varchar(50) NOT NULL DEFAULT 'BB',
   PRIMARY KEY (`id_sale`),
-  KEY `id_vlasnika` (`id_vlasnika`)
+  KEY `id_vlasnika` (`id_vlasnika`),
+  CONSTRAINT `fk_balon_sale_accounts` FOREIGN KEY (`id_vlasnika`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
 
 --
@@ -85,9 +86,6 @@ INSERT INTO `balon_sale` (`id_sale`, `id_vlasnika`, `naziv_sale`, `cena_po_satu`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ocene_igraca`
---
-
 DROP TABLE IF EXISTS `ocene_igraca`;
 CREATE TABLE IF NOT EXISTS `ocene_igraca` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -95,8 +93,10 @@ CREATE TABLE IF NOT EXISTS `ocene_igraca` (
   `ocena` int NOT NULL,
   `komentar` varchar(100) NOT NULL,
   `id_vlasnika` int NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_ocene_igraca_accounts` FOREIGN KEY (`id_igraca`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
 
 --
 -- Dumping data for table `ocene_igraca`
@@ -110,7 +110,6 @@ INSERT INTO `ocene_igraca` (`id`, `id_igraca`, `ocena`, `komentar`, `id_vlasnika
 --
 -- Table structure for table `ocene_sale`
 --
-
 DROP TABLE IF EXISTS `ocene_sale`;
 CREATE TABLE IF NOT EXISTS `ocene_sale` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -118,8 +117,11 @@ CREATE TABLE IF NOT EXISTS `ocene_sale` (
   `ocena` int NOT NULL,
   `komentar` varchar(100) NOT NULL,
   `id_igraca` int NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_ocene_sale_balon_sale` FOREIGN KEY (`id_sale`) REFERENCES `balon_sale` (`id_sale`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ocene_sale_accounts` FOREIGN KEY (`id_igraca`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
 
 --
 -- Dumping data for table `ocene_sale`
