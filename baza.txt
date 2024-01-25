@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 22, 2024 at 04:35 PM
+-- Generation Time: Jan 25, 2024 at 12:09 AM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.13
 
@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `accounts`
 --
 
--- Table structure for table `accounts`
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -42,7 +41,6 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
 
-
 --
 -- Dumping data for table `accounts`
 --
@@ -50,9 +48,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `ime`, `prezime`, `telefon`, `tip`) VALUES
 (1, 'danilo', '$2b$12$NwL6orB6IPaN1Lfr5qyfU.GqvCJN.7CoxCcCFVapzCtXUo/35WzR.', 'danilor@gmail.com', '', '', '', 0),
 (2, 'korisnik', '$2b$12$1q7KHnuMd67lQCLpKM1qkuqdXyN1YkpdGstE5/.GIK1HtxHVmmyyG', 'korisnik@mail.com', 'korisnik', 'korisnikovic', '066964496', 1),
-(3, 'korisnik2', '$2b$12$CkUtoJihx9Fh9ALY23JHjuqLaSiyVnarHNNhGtIsn/k6m8eMU7wwW', 'korisnik2@gmail.com', 'korisnikski', 'korisnkvovivovic', '464897', 2),
 (8, 'demo', 'HGJHFKHGGK', 'yorota8077@gearstag.com', 'demo', 'demovic', '645646', 1),
-(15, 'Veljko', '$2b$12$itD2jfYX4OlbGFzpI5SwqeeVhTNMs7W/ORbBBxfHwmQdui9fHeCx2', 'jeboyeh584@apdiv.com', 'Veljko', 'Vesic', '+38100066678', 2),
 (19, 'aki', '$2b$12$7naA8IkjIs19DmfJ0hB9eeneQbWoxxtpbVuW3L8fjmUJ5rmOpVJtq', 'aleksakg911@gmail.com', 'aki', 'kawasaki', '+3815648494949', 1),
 (22, 'coda', '$2b$12$Ew3oWZf1o/seOJuR6/qv8uXYCws5ussAq6ShWnBJ7k1giO/Z4Lik.', 'milosninkovic53@gmail.com', 'coda', 'codic', '+38148949849', 2);
 
@@ -60,6 +56,8 @@ INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `ime`, `prezime`,
 
 --
 -- Table structure for table `balon_sale`
+--
+
 DROP TABLE IF EXISTS `balon_sale`;
 CREATE TABLE IF NOT EXISTS `balon_sale` (
   `id_sale` int NOT NULL AUTO_INCREMENT,
@@ -70,8 +68,7 @@ CREATE TABLE IF NOT EXISTS `balon_sale` (
   `grad` varchar(50) NOT NULL,
   `adresa` varchar(50) NOT NULL DEFAULT 'BB',
   PRIMARY KEY (`id_sale`),
-  KEY `id_vlasnika` (`id_vlasnika`),
-  CONSTRAINT `fk_balon_sale_accounts` FOREIGN KEY (`id_vlasnika`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
+  KEY `id_vlasnika` (`id_vlasnika`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
 
 --
@@ -79,13 +76,15 @@ CREATE TABLE IF NOT EXISTS `balon_sale` (
 --
 
 INSERT INTO `balon_sale` (`id_sale`, `id_vlasnika`, `naziv_sale`, `cena_po_satu`, `opis`, `grad`, `adresa`) VALUES
-(23, 2, 'Rapid Bozovic', 3600.00, 'Mala balon sala locirana u srcu Sumarica', 'Kragujevac', 'Lovacka 39, Kragujevac'),
 (24, 2, 'Balon Sala \"Radosavljevic\"', 2600.00, 'dsajldsajasdj', 'Sremčica', 'dsjldajsjdsia'),
 (28, 19, 'Balon sala \"Kole\"', 4000.00, 'Sportski centar \"Kole petrol\" se nalazi u ul Dragoslava Srejovica66, Kragujevac. U sklopu sportskog centra \"Kole sport\" nalazi se balon sala za malifudbal I kafic. Sportski centar \"Kole sport\" je idea', 'Kragujevac', 'Dragoslava Srejovica 66');
 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ocene_igraca`
+--
+
 DROP TABLE IF EXISTS `ocene_igraca`;
 CREATE TABLE IF NOT EXISTS `ocene_igraca` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -94,22 +93,15 @@ CREATE TABLE IF NOT EXISTS `ocene_igraca` (
   `komentar` varchar(100) NOT NULL,
   `id_vlasnika` int NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_ocene_igraca_accounts` FOREIGN KEY (`id_igraca`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
+  KEY `fk_ocene_igraca_accounts` (`id_igraca`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
-
-
---
--- Dumping data for table `ocene_igraca`
---
-
-INSERT INTO `ocene_igraca` (`id`, `id_igraca`, `ocena`, `komentar`, `id_vlasnika`) VALUES
-(1, 15, 5, 'Top igrac!', 2);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `ocene_sale`
 --
+
 DROP TABLE IF EXISTS `ocene_sale`;
 CREATE TABLE IF NOT EXISTS `ocene_sale` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -118,10 +110,9 @@ CREATE TABLE IF NOT EXISTS `ocene_sale` (
   `komentar` varchar(100) NOT NULL,
   `id_igraca` int NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_ocene_sale_balon_sale` FOREIGN KEY (`id_sale`) REFERENCES `balon_sale` (`id_sale`) ON DELETE CASCADE,
-  CONSTRAINT `fk_ocene_sale_accounts` FOREIGN KEY (`id_igraca`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-
+  KEY `fk_ocene_sale_balon_sale` (`id_sale`),
+  KEY `fk_ocene_sale_accounts` (`id_igraca`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ocene_sale`
@@ -129,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `ocene_sale` (
 
 INSERT INTO `ocene_sale` (`id`, `id_sale`, `ocena`, `komentar`, `id_igraca`) VALUES
 (1, 24, 5, 'svaka im cast', 15),
-(2, 24, 1, 'Ovaj termin nije bio nesto  isk', 15),
-(3, 23, 5, 'Super sala!', 15);
+(4, 24, 5, 'svaka im cast 222', 19),
+(5, 24, 5, 'svaka im cast 222123123', 22);
 
 -- --------------------------------------------------------
 
@@ -201,7 +192,7 @@ INSERT INTO `termini` (`id`, `id_sale`, `id_igraca`, `status_termina`, `vreme`) 
 -- Constraints for table `balon_sale`
 --
 ALTER TABLE `balon_sale`
-  ADD CONSTRAINT `balon_sale_ibfk_1` FOREIGN KEY (`id_vlasnika`) REFERENCES `accounts` (`id`);
+  ADD CONSTRAINT `fk_balon_sale_accounts` FOREIGN KEY (`id_vlasnika`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
