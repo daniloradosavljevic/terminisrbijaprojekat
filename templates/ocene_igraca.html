@@ -5,7 +5,7 @@
         <ul class="list-group list-group-numbered">
             {% if ocene %}
             {% for ocena in ocene %}
-                <li class="list-group-item d-flex justify-content-between align-items-start">Ocena: {{ ocena[0] }}, Komentar: {{ ocena[1] }}, Ocenio/la: {{ ocena[2] }} {{ ocena[3] }}</li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">Ocena: {{ ocena[0] }}, Komentar: {{ ocena[1] }}</li>
             {% endfor %}
             {% else %}
             <li class="list-group-item d-flex justify-content-between align-items-start">Nema ocena za ovog igrača</li>

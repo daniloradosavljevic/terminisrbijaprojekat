@@ -273,7 +273,7 @@ def sale():
             LEFT JOIN slike_sala ON balon_sale.id_sale = slike_sala.id_sale
             LEFT JOIN ocene_sale ON balon_sale.id_sale = ocene_sale.id_sale
             WHERE slike_sala.id_slike_sale IS NOT NULL OR ocene_sale.id IS NOT NULL
-            GROUP BY balon_sale.id_sale
+            GROUP BY balon_sale.id_sale ORDER BY RAND()
             """
         cursor.execute(query)
 

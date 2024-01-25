@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 25, 2024 at 12:09 AM
+-- Generation Time: Jan 25, 2024 at 02:43 AM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.13
 
@@ -39,18 +39,20 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `tip` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `accounts`
 --
 
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `ime`, `prezime`, `telefon`, `tip`) VALUES
-(1, 'danilo', '$2b$12$NwL6orB6IPaN1Lfr5qyfU.GqvCJN.7CoxCcCFVapzCtXUo/35WzR.', 'danilor@gmail.com', '', '', '', 0),
-(2, 'korisnik', '$2b$12$1q7KHnuMd67lQCLpKM1qkuqdXyN1YkpdGstE5/.GIK1HtxHVmmyyG', 'korisnik@mail.com', 'korisnik', 'korisnikovic', '066964496', 1),
-(8, 'demo', 'HGJHFKHGGK', 'yorota8077@gearstag.com', 'demo', 'demovic', '645646', 1),
-(19, 'aki', '$2b$12$7naA8IkjIs19DmfJ0hB9eeneQbWoxxtpbVuW3L8fjmUJ5rmOpVJtq', 'aleksakg911@gmail.com', 'aki', 'kawasaki', '+3815648494949', 1),
-(22, 'coda', '$2b$12$Ew3oWZf1o/seOJuR6/qv8uXYCws5ussAq6ShWnBJ7k1giO/Z4Lik.', 'milosninkovic53@gmail.com', 'coda', 'codic', '+38148949849', 2);
+(1, 'admin', '$2b$12$NwL6orB6IPaN1Lfr5qyfU.GqvCJN.7CoxCcCFVapzCtXUo/35WzR.', 'admin@nekimail.com', '', '', '', 0),
+(23, 'DaniloR', '$2b$12$6YTOf.KA5D.wnxpNbWg/jufdwMlCcK18zgDaZeG5r9/JV/bvwDQMG', 'danilor@nekimail.com', 'Danilo', 'Radosavljević', '+381668856637', 2),
+(24, 'VeljkoV', '$2b$12$gzQ03tLqQhXt8Ei.a9H0/.DSktRXH2TQa9jS3mDmIQ3zscGw/hp.C', 'veljkov@nekimail.com', 'Veljko', 'Vesić', '+381661114457', 2),
+(25, 'AleksaA', '$2b$12$PqbjKEdF/NWXZVkrlVmVb.AeQAZ0SshNs4e8YNEmPA9bMHIQJKBHK', 'aleksaa@nekimail.com', 'Aleksa', 'Atanasković', '+38164555333', 1),
+(26, 'LazarM', '$2b$12$ulKEIxrAVEBbm0IINuj3JOWEpdB8WmcEJjkdPDKDPNffXBf3vtO/S', 'lazarm@nekimail.com', 'Lazar', 'Marković', '+38163552225', 1),
+(27, 'AleksandarDj', '$2b$12$V1pvgtKR5o9v1phqwAWAWuR3nHkPwQTNRpYzQQclAeNY55mfJz0RG', 'aleksandardj@nekimail.com', 'Aleksandar', 'Đorđević', '+381999999', 1),
+(28, 'NemanjaN', '$2b$12$XP8kSXQekpYcWV32wXEKverzwknQaI4pKOkrCTb8lEGRzMWjKa5pi', 'nemanjan@nekimail.com', 'Nemanja', 'Nedović', '+38166198989', 2);
 
 -- --------------------------------------------------------
 
@@ -69,15 +71,19 @@ CREATE TABLE IF NOT EXISTS `balon_sale` (
   `adresa` varchar(50) NOT NULL DEFAULT 'BB',
   PRIMARY KEY (`id_sale`),
   KEY `id_vlasnika` (`id_vlasnika`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `balon_sale`
 --
 
 INSERT INTO `balon_sale` (`id_sale`, `id_vlasnika`, `naziv_sale`, `cena_po_satu`, `opis`, `grad`, `adresa`) VALUES
-(24, 2, 'Balon Sala \"Radosavljevic\"', 2600.00, 'dsajldsajasdj', 'Sremčica', 'dsjldajsjdsia'),
-(28, 19, 'Balon sala \"Kole\"', 4000.00, 'Sportski centar \"Kole petrol\" se nalazi u ul Dragoslava Srejovica66, Kragujevac. U sklopu sportskog centra \"Kole sport\" nalazi se balon sala za malifudbal I kafic. Sportski centar \"Kole sport\" je idea', 'Kragujevac', 'Dragoslava Srejovica 66');
+(30, 25, 'Balon sala \"Kole\"', 4000.00, 'Sportski centar \"Kole petrol\" se nalazi u ul Dragoslava Srejovica66, Kragujevac. U sklopu sportskog centra \"Kole sport\" nalazi se balon sala za malifudbal I kafic.', 'Kragujevac', 'Dragoslava Srejovića 66'),
+(32, 25, 'Balon sala \"Rapid Božović\"', 3600.00, 'Balon sala koja se nalazi u samom srcu Šumarica, sa terenom napolje i unutra. Takođe, posedujemo i kafić za druženje posle termina, vidimo se!', 'Kragujevac', 'Lovačka 39'),
+(33, 26, 'Balon sala \"Arena Sport\"', 4000.00, 'Mi smo sportski centar koji se nalazi u mirnom delu grada, naselje Ćava. Posedujemo jedan od najvećih terena na gradu i ponosimo se time!', 'Kragujevac', 'Brionska 2'),
+(34, 26, 'Balon sala \"Šumadija\"', 2600.00, 'S ponosom najjeftinija balon sala u gradu! Ne želimo da naši igrači plaćaju paprene cene za nešto što nikako ne treba da bude luksuz. Dođite, da uživamo u fubdalu!', 'Kragujevac', 'Save Kovačevića 53'),
+(35, 27, 'Balon sala \"Coin\" ', 6000.00, 'Jedna od najboljih balon sala u Beogradu. Izuzetni uslovi za igru, veštačka trava iz švajscarske i original jabulani lopte iz 2010. godine!', 'Beograd', 'Milentija Popovića 72'),
+(36, 27, 'Balon sala \"Magic\" ', 5000.00, 'Bez dileme najbolja balon sala u Novom Sadu! Dođite i uverite se sami, fudbal je milina igrati kod nas!', 'Novi Sad', 'Podunavska 12');
 
 -- --------------------------------------------------------
 
@@ -94,7 +100,17 @@ CREATE TABLE IF NOT EXISTS `ocene_igraca` (
   `id_vlasnika` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ocene_igraca_accounts` (`id_igraca`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `ocene_igraca`
+--
+
+INSERT INTO `ocene_igraca` (`id`, `id_igraca`, `ocena`, `komentar`, `id_vlasnika`) VALUES
+(2, 23, 5, 'Super igrač, svaka mu čast. Došli, ispoštovali, platili - molim lepo!', 26),
+(3, 28, 2, 'Loš igrač, došli i polomili reklamu koja stoji na ulazu u salu, ne preporučujem!!!', 26),
+(4, 24, 4, 'Dobar igrač, samo ljudi koje je doveo malo galame!', 25),
+(5, 24, 5, 'Mnogo dobar igrač!', 25);
 
 -- --------------------------------------------------------
 
@@ -112,16 +128,25 @@ CREATE TABLE IF NOT EXISTS `ocene_sale` (
   PRIMARY KEY (`id`),
   KEY `fk_ocene_sale_balon_sale` (`id_sale`),
   KEY `fk_ocene_sale_accounts` (`id_igraca`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `ocene_sale`
 --
 
 INSERT INTO `ocene_sale` (`id`, `id_sale`, `ocena`, `komentar`, `id_igraca`) VALUES
-(1, 24, 5, 'svaka im cast', 15),
-(4, 24, 5, 'svaka im cast 222', 19),
-(5, 24, 5, 'svaka im cast 222123123', 22);
+(7, 34, 3, 'Što se kaže - koliko para toliko muzike...', 23),
+(6, 30, 5, 'Ubedljivo najbolja sala u Kragujevcu!!!', 24),
+(8, 33, 4, 'FENOMENALNA SALA! Samo lokacija malo koči...', 23),
+(9, 35, 5, 'Top sala, iako je cena užas...', 28),
+(10, 36, 1, 'Zakazao termin, a kad sam došao sala bila zaključana, nikakva preporuka!', 24),
+(11, 32, 4, 'Nije loše, nimalooo', 24),
+(12, 30, 4, 'Definitivno najbolja sala u Kragujevcu, samo je nemoguće rezervisati termin...', 24),
+(13, 36, 4, 'Tvrdim da u novom sadu teško da ima bolje!', 24),
+(14, 32, 5, 'FENOMENALNO', 24),
+(15, 30, 5, 'Odlično - prosto i jednostavno.', 28),
+(16, 32, 4, 'Vrlo sam zadovoljan uslugama, samo u kafiću nema da se popije kafa što je razlog što dajem 4 a ne 5!', 28),
+(17, 35, 5, 'Svaka čast!', 28);
 
 -- --------------------------------------------------------
 
@@ -135,21 +160,33 @@ CREATE TABLE IF NOT EXISTS `slike_sala` (
   `id_sale` int NOT NULL,
   `putanja` varchar(100) NOT NULL,
   PRIMARY KEY (`id_slike_sale`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `slike_sala`
 --
 
 INSERT INTO `slike_sala` (`id_slike_sale`, `id_sale`, `putanja`) VALUES
-(4, 23, 'static/slike_sala\\bb9fba16-4b8a-4a99-8a73-acfd7c98d26f.jpg'),
-(5, 23, 'static/slike_sala\\b9ca19dd-0d20-40bf-ac76-03266c716de9.jpg'),
-(6, 24, 'static/slike_sala\\292b3434-04d8-4ce8-9018-e28147f6c579.jpg'),
-(7, 25, 'static/slike_sala\\b1e52b4e-566f-40d2-ab66-7b586174b97c.jpg'),
-(8, 26, 'static/slike_sala\\81506123-4944-4fb0-9f93-da5dda5a4bc9.jpg'),
-(9, 28, 'static/slike_sala\\790c0284-85e5-4487-a37f-fd6d1922da1a.jpg'),
-(10, 28, 'static/slike_sala\\2a40ddbf-ec9e-47f7-92f7-6f4c6bad8454.jpg'),
-(11, 28, 'static/slike_sala\\d579c1ad-63a8-4196-8ff0-44ec92b209ff.jpg');
+(22, 32, 'static/slike_sala\\126e43be-80f8-44ce-a1a9-02b337049372.jpg'),
+(21, 32, 'static/slike_sala\\16490139-7ef7-4c6e-9428-eefde613c4eb.jpg'),
+(20, 31, 'static/slike_sala\\a1317c4e-14df-423e-85cf-7a72d05d8545.jpg'),
+(19, 31, 'static/slike_sala\\bde9d8bf-d25b-47a1-83a3-68c7d045310c.jpg'),
+(18, 31, 'static/slike_sala\\e73c6596-a4b5-4fff-81c7-e90c59e7cfea.jpg'),
+(17, 30, 'static/slike_sala\\fa544d76-bb6e-4e7c-a662-6ebd27167af6.jpg'),
+(16, 30, 'static/slike_sala\\f9352a2f-7a27-498c-a697-2373605aeb0e.jpg'),
+(15, 30, 'static/slike_sala\\49b8a0fb-4ac7-4a64-b39b-021cd5d42b41.jpg'),
+(23, 32, 'static/slike_sala\\eb85c572-e3a4-409c-978b-c0775fc67610.jpg'),
+(24, 33, 'static/slike_sala\\dd934c84-fa9f-47bd-a9c5-bd2e69fe4a04.jpg'),
+(25, 33, 'static/slike_sala\\68fb71e3-d566-44ba-a88b-49581e1b4547.jpg'),
+(26, 33, 'static/slike_sala\\1db96a59-8880-438f-b486-2e7e5f204d47.jpg'),
+(27, 34, 'static/slike_sala\\87ff23b4-6a22-477c-98ca-cf92c3f95c1c.jpg'),
+(28, 34, 'static/slike_sala\\95e2a206-ea72-4546-87c6-bfde1fab69e9.jpg'),
+(29, 35, 'static/slike_sala\\290d35d2-ddbe-41c3-bccd-48f63637b7ba.jpg'),
+(30, 35, 'static/slike_sala\\847e9961-5a24-4dd6-a81a-7756ac70fe99.jpg'),
+(31, 35, 'static/slike_sala\\05547ee1-4cff-45a2-b34c-c36daf452b02.jpg'),
+(32, 36, 'static/slike_sala\\5a0d46a8-884c-4a89-a077-934f403f6956.jpg'),
+(33, 36, 'static/slike_sala\\943afca3-011d-4507-a68c-3f52775b4bfd.jpg'),
+(34, 36, 'static/slike_sala\\ace50fd9-7468-4ce8-bc66-757eba9002e4.jpg');
 
 -- --------------------------------------------------------
 
@@ -165,24 +202,26 @@ CREATE TABLE IF NOT EXISTS `termini` (
   `status_termina` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `vreme` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `termini`
 --
 
 INSERT INTO `termini` (`id`, `id_sale`, `id_igraca`, `status_termina`, `vreme`) VALUES
-(1, 23, 2, 'odbijen', '2024-01-04 11:54:00'),
-(2, 23, 2, 'odbijen', '2024-01-04 11:54:00'),
-(3, 23, 2, 'odobren', '2024-01-04 12:02:00'),
-(4, 24, 15, 'potvrdjen', '2024-01-19 12:09:00'),
-(17, 28, 15, 'odobren', '2024-01-20 01:00:00'),
-(12, 23, 15, 'odobren', '2024-01-19 16:00:00'),
-(11, 23, 15, 'odobren', '2024-01-19 16:00:00'),
-(8, 24, 15, 'potvrdjen', '2024-01-03 12:11:00'),
-(10, 23, 1, 'odobren', '2024-01-23 20:00:00'),
-(14, 24, 20, 'zatrazen', '2024-01-16 20:00:00'),
-(16, 28, 20, 'zatrazen', '2024-02-10 01:00:00');
+(28, 30, 28, 'odobren', '2024-05-29 03:00:00'),
+(27, 32, 28, 'odobren', '2024-03-26 03:00:00'),
+(26, 35, 28, 'odobren', '2024-02-07 03:00:00'),
+(25, 33, 28, 'odbijen', '2024-01-09 03:00:00'),
+(24, 36, 28, 'zatrazen', '2024-02-01 09:00:00'),
+(23, 30, 24, 'odobren', '2024-01-01 03:00:00'),
+(22, 35, 24, 'zatrazen', '2024-02-03 03:00:00'),
+(21, 36, 24, 'odobren', '2024-02-10 03:00:00'),
+(20, 32, 23, 'odbijen', '2024-02-02 03:00:00'),
+(19, 34, 23, 'odobren', '2024-01-10 03:00:00'),
+(18, 33, 23, 'odobren', '2024-01-27 03:00:00'),
+(29, 34, 28, 'odobren', '2024-01-20 03:00:00'),
+(30, 32, 24, 'odobren', '2024-02-03 03:00:00');
 
 --
 -- Constraints for dumped tables
