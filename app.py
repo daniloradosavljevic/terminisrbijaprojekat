@@ -20,6 +20,7 @@ app.config["MYSQL_DB"] = "e-poslovanje"
 
 app.config["MAIL_SERVER"] = "smtp.yandex.com"
 app.config["MAIL_PORT"] = 587  # Yandex obično koristi port 587 za TLS
+#potrebno je dodati i svoj app.config["USERNAME"] i app.config["PASSWORD"]
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USE_SSL"] = False
 
